@@ -10,7 +10,7 @@ import authRouter from './routers/auth'
 import vacationsRouter from './routers/vacations'
 import authEnforce from './middlewares/auth-enforce'
 import sequelize from './db/sequelize'
-import { createAppBucketIfNotExist } from './aws/aws'
+import { createAppBucketIfNotExist, uploadSeedImagesIfMissing } from './aws/aws'
 
 const app = express()
 
@@ -40,5 +40,7 @@ export async function init() {
     await sequelize.sync({ force: !!config.get('app.sync.force') })
 
     // make sure the s3 bucket for vacation images exists
+    // and holds the seed images referenced by the seed sql
     await createAppBucketIfNotExist()
+    await uploadSeedImagesIfMissing()
 }

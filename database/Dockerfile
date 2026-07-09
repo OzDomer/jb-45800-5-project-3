@@ -1,6 +1,5 @@
 FROM mysql:latest
 
-# export from phpmyadmin a .sql file
-# and reaplce ./betterx.sql with it
-# then uncomment the following line
-# COPY ./betterx.sql /docker-entrypoint-initdb.d/
+# the mysql image runs every .sql file in this folder on first startup
+# (only when the data directory is empty)
+COPY ./vacations.sql /docker-entrypoint-initdb.d/
