@@ -2,7 +2,9 @@
 services:
   # docker run --name betterx-db -e=MYSQL_ALLOW_EMPTY_PASSWORD=1 -e=MYSQL_DATABASE=college -e=MYSQL_TCP_PORT=3306 -p 3306:3306 -d shaharsol/betterx-db:1.0
   database:
-    container_name: betterx-db-compose 
+    container_name: betterx-db-compose
+    volumes:
+      - vacations-mysql-data:/var/lib/mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
       - MYSQL_DATABASE=vacations
@@ -56,6 +58,9 @@ services:
     container_name: betterx-front-compose
     ports:
       - 6124:80
-    build: 
+    build:
       context: ./frontend
       dockerfile: Dockerfile.compose
+
+volumes:
+  vacations-mysql-data:
