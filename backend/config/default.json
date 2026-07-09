@@ -1,7 +1,7 @@
 {
     "app": {
         "port": 3000,
-        "name": "",
+        "name": "vacationsDev",
         "sync": {
             "force": false
         },
@@ -12,6 +12,19 @@
         "port": 3306,
         "username": "root",
         "password": "",
-        "database": "{change me to the real db name}" 
+        "database": "vacations"
+    },
+    "aws": {
+        "bucket": "vacations",
+        "publicUrl": "http://localhost:4566",
+        "connection": {
+            "region": "us-east-1",
+            "forcePathStyle": true,
+            "credentials": {
+                "accessKeyId": "test",
+                "secretAccessKey": "test"
+            },
+            "endpoint": "http://localhost:4566"
+        }
     }
 }

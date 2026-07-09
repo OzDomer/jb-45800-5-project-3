@@ -1,19 +1,21 @@
 import type { NextFunction, Request, Response } from "express";
-import { ObjectSchema } from "joi";
+import { ZodType } from "zod";
 
-export default function bodyValidation(validator: ObjectSchema) {
+export default function bodyValidation(validator: ZodType) {
     return async (request: Request, response: Response, next: NextFunction) => {
-        try {
-            // we push the validation result back into the request
-            // because the validation may contain transformations 
-            // (.e.g. uppercase)
-            request.body = await validator.validateAsync(request.body)
-            next()
-        } catch (e) {
-            next({
+        // we push the validation result back into the request
+        // because the validation may contain transformations
+        // (e.g. coercing multipart string fields into numbers/dates)
+        const result = await validator.safeParseAsync(request.body)
+
+        if (!result.success) {
+            return next({
                 status: 422,
-                message: e.message || 'unprocessable entity'
+                message: result.error.issues[0]?.message || 'unprocessable entity'
             })
         }
-    }    
+
+        request.body = result.data
+        next()
+    }
 }

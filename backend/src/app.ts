@@ -1,34 +1,44 @@
 import express, { json } from 'express'
-import logError from './middlewares/error/log-error'
+import morgan from 'morgan'
+import cors from 'cors'
+import fileUpload from 'express-fileupload'
 import config from 'config'
+import logError from './middlewares/error/log-error'
 import respondError from './middlewares/error/error-responder'
 import notFound from './middlewares/not-found'
-import cors from 'cors'
+import authRouter from './routers/auth'
+import vacationsRouter from './routers/vacations'
+import authEnforce from './middlewares/auth-enforce'
 import sequelize from './db/sequelize'
+import { createAppBucketIfNotExist } from './aws/aws'
 
+const app = express()
 
-(async () => {
-    const port = config.get<number>('app.port')
-    const name = config.get<string>('app.name')
+app.use(morgan('dev'))
 
+// middlewares
+app.use('/', cors())
+app.use('/auth', authRouter)
+app.use('/', authEnforce)
+app.use('/', json())
+app.use('/', fileUpload()) // handles multipart/form-data requests (vacation images)
+app.use('/vacations', vacationsRouter)
 
-    const app = express()
+// not found
+app.use('/', notFound)
 
-    // middlewares
-    app.use('/', cors())
-    app.use('/', json())
+// error middlewares
+app.use('/', logError)
+app.use('/', respondError)
 
-    // load routers here...
+export default app
 
-    // not found
-    app.use('/', notFound)
+export async function init() {
+    // start our sequelize engine: connect to the database,
+    // check the models array against it and create missing tables
+    // using {force: true} is SUPER dangerous, especially in production!
+    await sequelize.sync({ force: !!config.get('app.sync.force') })
 
-    // error middlewares
-    app.use('/', logError)
-    app.use('/', respondError)
-
-    await sequelize.sync({force: !!config.get('app.sync.force')})
-
-    // starting the server
-    app.listen(port, () => console.log(`app ${name} started on port ${port}....`))
-})()
+    // make sure the s3 bucket for vacation images exists
+    await createAppBucketIfNotExist()
+}

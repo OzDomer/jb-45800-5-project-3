@@ -1,9 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
 import { ZodType } from "zod";
 
-export default function paramsValidation(validator: ZodType) {
+export default function filesValidation(validator: ZodType) {
     return async (request: Request, response: Response, next: NextFunction) => {
-        const result = await validator.safeParseAsync(request.params)
+        // request.files is null/undefined when no multipart files arrived -
+        // normalize to an empty object so "required file" schemas fail
+        // with their own friendly message
+        const result = await validator.safeParseAsync(request.files ?? {})
 
         if (!result.success) {
             return next({
@@ -12,7 +15,6 @@ export default function paramsValidation(validator: ZodType) {
             })
         }
 
-        request.params = result.data as Request['params']
         next()
     }
 }

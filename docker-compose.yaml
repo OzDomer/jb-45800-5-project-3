@@ -5,7 +5,7 @@ services:
     container_name: betterx-db-compose 
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
-      - MYSQL_DATABASE=college
+      - MYSQL_DATABASE=vacations
       - MYSQL_TCP_PORT=3306
     expose:
       - 3306
@@ -19,6 +19,14 @@ services:
       retries: 5
       start_period: 30s
       
+  # docker run --name localstack -d -it -p 4566:4566 -p 4510-4559:4510-4559 localstack/localstack:4.4.0
+  localstack:
+    container_name: localstack-compose
+    ports:
+      - 4566:4566
+      - 4510-4559:4510-4559
+    image: localstack/localstack:4.4.0
+
   # docker run --name betterx-backend-p 3000:3000 -d shaharsol/betterx-backend:3.0
   backend:
     container_name: betterx-backend-compose
