@@ -1,11 +1,19 @@
 import './Admin.css'
+import { useNavigate } from 'react-router-dom'
+import Vacations from '../../vacations/list/Vacations'
 
-// placeholder - implemented in phase 7 (admin cards with edit/delete)
 export default function Admin() {
+
+    const navigate = useNavigate()
+
     return (
         <div className='Admin'>
-            <h2>Admin</h2>
-            <p>vacation management is coming in a later phase...</p>
+            <div className='Admin-toolbar'>
+                <h2>Vacation Management</h2>
+                <button onClick={() => navigate('/admin/add')}>+ Add Vacation</button>
+            </div>
+
+            <Vacations adminActions />
         </div>
     )
 }

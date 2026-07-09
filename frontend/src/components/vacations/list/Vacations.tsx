@@ -19,7 +19,14 @@ const filterLabels: { value: VacationsFilter, label: string }[] = [
     { value: 'upcoming', label: 'Not started yet' },
 ]
 
-export default function Vacations() {
+interface VacationsProps {
+    // the admin page reuses this list with edit/delete actions on every card
+    adminActions?: boolean
+}
+
+export default function Vacations(props: VacationsProps) {
+
+    const { adminActions } = props
 
     const user = useUser()
     const isAdmin = user?.role === Role.Admin
@@ -110,6 +117,7 @@ export default function Vacations() {
                             key={vacation.id}
                             vacation={vacation}
                             isAdmin={isAdmin}
+                            showAdminActions={adminActions}
                         />
                     ))}
                 </div>

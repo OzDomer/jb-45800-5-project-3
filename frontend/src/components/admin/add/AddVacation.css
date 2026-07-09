@@ -1,3 +1,66 @@
-.AddVacation {
-    padding: 24px;
+.VacationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 380px;
+    margin: 32px auto;
+    padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: left;
+}
+
+.VacationForm h2 {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.VacationForm label {
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.VacationForm input,
+.VacationForm textarea {
+    font: inherit;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-h);
+}
+
+.VacationForm input:focus,
+.VacationForm textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.VacationForm .error {
+    color: #d64545;
+    font-size: 13px;
+    min-height: 18px;
+}
+
+.VacationForm-preview {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+.VacationForm .SpinnerButton {
+    text-align: center;
+    margin-top: 12px;
+}
+
+.VacationForm-cancel {
+    font: inherit;
+    margin-top: 8px;
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
 }

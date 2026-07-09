@@ -56,6 +56,29 @@ span.VacationCard-like {
     cursor: default;
 }
 
+.VacationCard-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 6px;
+}
+
+.VacationCard-actions button {
+    font: inherit;
+    font-size: 13px;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #444;
+    cursor: pointer;
+}
+
+.VacationCard-actions button:hover {
+    background: #fff;
+}
+
 .VacationCard-dates {
     padding: 8px 14px;
     font-size: 14px;
