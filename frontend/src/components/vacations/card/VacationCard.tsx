@@ -95,11 +95,14 @@ export default function VacationCard(props: VacationCardProps) {
                     </div>
                 )}
 
+            </div>
+
+            {/* the plate caption: destination name with its atlas mark */}
+            <div className='VacationCard-caption'>
                 <h3>{destination}</h3>
                 <span className='VacationCard-code'>{destinationCode(destination)}</span>
             </div>
 
-            {/* the tear line: this card is a boarding pass */}
             <div className='VacationCard-perforation'></div>
 
             <div className='VacationCard-dates'>

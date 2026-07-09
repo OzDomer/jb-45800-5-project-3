@@ -9,8 +9,6 @@
 }
 
 .NotFound p {
-    font-family: var(--mono);
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    font-style: italic;
+    font-size: 16px;
 }

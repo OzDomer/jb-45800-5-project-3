@@ -1,22 +1,20 @@
 .Vacations {
-    padding: 24px;
+    padding: 26px 24px;
 }
 
 .Vacations-filters {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 26px;
+    margin-bottom: 28px;
     flex-wrap: wrap;
 }
 
 .Vacations-filters button {
-    font-family: var(--display);
-    font-size: 16px;
+    font-family: var(--sans);
+    font-size: 15px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 6px 18px;
+    padding: 7px 20px;
     border: 1px solid var(--border);
     border-radius: 999px;
     background: var(--surface);
@@ -32,16 +30,16 @@
 .Vacations-filters button.active {
     background: var(--accent);
     border-color: var(--accent);
-    color: #fff;
+    color: #fffcf4;
 }
 
 .Vacations-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    gap: 24px;
 }
 
-/* one orchestrated moment: the board fills in like departures flipping up */
+/* one orchestrated moment: plates settle onto the desk */
 @media (prefers-reduced-motion: no-preference) {
     .Vacations-grid .VacationCard {
         animation: card-arrive 0.4s ease both;
@@ -77,8 +75,7 @@
 .Vacations-empty {
     padding: 32px;
     text-align: center;
-    font-family: var(--mono);
-    font-size: 14px;
+    font-style: italic;
 }
 
 .Vacations-sentinel {

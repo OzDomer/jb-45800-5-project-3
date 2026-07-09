@@ -9,25 +9,23 @@
 }
 
 .SpinnerButton span {
-    font-family: var(--mono);
-    font-size: 13px;
+    font-style: italic;
+    font-size: 14px;
 }
 
 .SpinnerButton button {
-    font-family: var(--display);
-    font-size: 17px;
+    font-family: var(--sans);
+    font-size: 16px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    padding: 8px 22px;
+    padding: 9px 26px;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     background: var(--accent);
-    color: #fff;
+    color: #fffcf4;
     cursor: pointer;
     transition: filter 0.15s ease;
 }
 
 .SpinnerButton button:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.1);
 }

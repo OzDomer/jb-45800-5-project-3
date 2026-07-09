@@ -35,7 +35,7 @@
 .Assistant-answer {
     text-align: left;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 18px;
     background: var(--surface);
     padding: 16px 20px;
     box-shadow: var(--shadow);

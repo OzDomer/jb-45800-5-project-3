@@ -17,13 +17,13 @@
 
 .Reports-chart {
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 18px;
     background: var(--surface);
     box-shadow: var(--shadow);
     padding: 16px 8px 8px;
 }
 
 .Reports-chart .recharts-text {
-    font-family: var(--mono);
+    font-family: var(--sans);
     font-size: 11px;
 }

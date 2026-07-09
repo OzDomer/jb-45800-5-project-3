@@ -7,7 +7,7 @@
     margin: 32px auto;
     padding: 32px;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 18px;
     box-shadow: var(--shadow);
     background: var(--surface);
     text-align: left;
@@ -19,10 +19,9 @@
 }
 
 .VacationForm label {
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+    font-variant-caps: all-small-caps;
+    font-size: 14px;
+    letter-spacing: 0.09em;
     margin-top: 8px;
     color: var(--text);
 }

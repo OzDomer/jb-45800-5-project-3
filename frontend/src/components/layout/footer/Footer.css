@@ -4,23 +4,21 @@
     justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
-    padding: 14px 24px;
-    margin-top: 32px;
+    padding: 16px 24px;
+    margin-top: 36px;
     border-top: 1px solid var(--border);
 }
 
 .Footer-brand {
     font-family: var(--display);
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-style: italic;
     color: var(--text-h);
 }
 
 .Footer-note {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text);
 }

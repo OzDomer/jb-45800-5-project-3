@@ -18,8 +18,8 @@
 }
 
 .Ai-controls select {
-    font-family: var(--mono);
-    font-size: 14px;
+    font-family: var(--sans);
+    font-size: 15px;
     padding: 9px 12px;
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -36,7 +36,7 @@
 .Ai-result {
     text-align: left;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 18px;
     background: var(--surface);
     padding: 22px 26px;
     box-shadow: var(--shadow);

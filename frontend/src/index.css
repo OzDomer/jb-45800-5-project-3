@@ -1,33 +1,33 @@
 /* ============================================================
    Otherworld Vacations - design tokens
-   an interdimensional travel agency: boarding passes, departure
-   boards, destination codes. porcelain by day, indigo night by
-   night. violet is the portal, orange is the stamp.
+   an explorer's atlas of places that do not exist: aged paper,
+   bookcloth green, gilt edges. by night, a leather-bound
+   library. serif voices: Fraunces speaks, Lora narrates.
    ============================================================ */
 
 :root {
-  /* light: porcelain day */
-  --bg: #f7f8fa;
-  --surface: #ffffff;
-  --text: #4a4e5c;
-  --text-h: #1b1e28;
-  --border: #dee1e8;
-  --code-bg: #eceef3;
+  /* light: the atlas, open on a desk */
+  --bg: #f9f1e3;
+  --surface: #fffcf4;
+  --text: #5a5040;
+  --text-h: #2a2118;
+  --border: #e4d7bc;
+  --code-bg: #f1e7d2;
 
-  --accent: #5438dc;
-  --accent-bg: rgba(84, 56, 220, 0.08);
-  --accent-border: rgba(84, 56, 220, 0.45);
-  --signal: #e8590c;
-  --signal-bg: rgba(232, 89, 12, 0.1);
+  --accent: #2f6b4e;
+  --accent-bg: rgba(47, 107, 78, 0.09);
+  --accent-border: rgba(47, 107, 78, 0.45);
+  --signal: #b9862f;
+  --signal-bg: rgba(185, 134, 47, 0.13);
 
-  --chart-series: #5438dc;
-  --shadow: rgba(27, 30, 40, 0.08) 0 10px 24px -8px, rgba(27, 30, 40, 0.05) 0 3px 8px -2px;
+  --chart-series: #1e7a4a;
+  --shadow: rgba(90, 66, 25, 0.13) 0 12px 26px -10px, rgba(90, 66, 25, 0.07) 0 3px 8px -2px;
 
-  --display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  --sans: 'Barlow', system-ui, sans-serif;
-  --mono: 'Space Mono', ui-monospace, monospace;
+  --display: 'Fraunces', Georgia, serif;
+  --sans: 'Lora', Georgia, serif;
+  --mono: 'Lora', Georgia, serif;
 
-  font: 16px/1.5 var(--sans);
+  font: 16px/1.55 var(--sans);
   color: var(--text);
   background: var(--bg);
   color-scheme: light;
@@ -37,22 +37,22 @@
 }
 
 :root[data-theme='dark'] {
-  /* dark: indigo night - a sky, not a void */
-  --bg: #14162b;
-  --surface: #1d2040;
-  --text: #a7abc0;
-  --text-h: #eeeff7;
-  --border: #33375c;
-  --code-bg: #262a4d;
+  /* dark: the library after closing time */
+  --bg: #211c13;
+  --surface: #2c2517;
+  --text: #b4a88f;
+  --text-h: #f1e8d4;
+  --border: #493e29;
+  --code-bg: #383021;
 
-  --accent: #8b7bff;
-  --accent-bg: rgba(139, 123, 255, 0.12);
-  --accent-border: rgba(139, 123, 255, 0.5);
-  --signal: #ff9457;
-  --signal-bg: rgba(255, 148, 87, 0.14);
+  --accent: #8fbe9f;
+  --accent-bg: rgba(143, 190, 159, 0.12);
+  --accent-border: rgba(143, 190, 159, 0.5);
+  --signal: #d9ac4f;
+  --signal-bg: rgba(217, 172, 79, 0.14);
 
-  --chart-series: #8b7bff;
-  --shadow: rgba(0, 0, 5, 0.45) 0 12px 28px -10px, rgba(0, 0, 5, 0.3) 0 4px 10px -4px;
+  --chart-series: #35a96f;
+  --shadow: rgba(0, 0, 0, 0.5) 0 12px 28px -10px, rgba(0, 0, 0, 0.35) 0 4px 10px -4px;
 
   color-scheme: dark;
 }
@@ -60,19 +60,19 @@
 /* no-js fallback: follow the system */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --bg: #14162b;
-    --surface: #1d2040;
-    --text: #a7abc0;
-    --text-h: #eeeff7;
-    --border: #33375c;
-    --code-bg: #262a4d;
-    --accent: #8b7bff;
-    --accent-bg: rgba(139, 123, 255, 0.12);
-    --accent-border: rgba(139, 123, 255, 0.5);
-    --signal: #ff9457;
-    --signal-bg: rgba(255, 148, 87, 0.14);
-    --chart-series: #8b7bff;
-    --shadow: rgba(0, 0, 5, 0.45) 0 12px 28px -10px, rgba(0, 0, 5, 0.3) 0 4px 10px -4px;
+    --bg: #211c13;
+    --surface: #2c2517;
+    --text: #b4a88f;
+    --text-h: #f1e8d4;
+    --border: #493e29;
+    --code-bg: #383021;
+    --accent: #8fbe9f;
+    --accent-bg: rgba(143, 190, 159, 0.12);
+    --accent-border: rgba(143, 190, 159, 0.5);
+    --signal: #d9ac4f;
+    --signal-bg: rgba(217, 172, 79, 0.14);
+    --chart-series: #35a96f;
+    --shadow: rgba(0, 0, 0, 0.5) 0 12px 28px -10px, rgba(0, 0, 0, 0.35) 0 4px 10px -4px;
     color-scheme: dark;
   }
 }
@@ -103,21 +103,19 @@ main {
 
 h1, h2, h3 {
   font-family: var(--display);
+  font-weight: 600;
   color: var(--text-h);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: -0.01em;
 }
 
 h2 {
   font-size: 34px;
-  font-weight: 600;
-  line-height: 1.1;
+  line-height: 1.15;
   margin: 0 0 10px;
 }
 
 h3 {
   font-size: 22px;
-  font-weight: 600;
   margin: 0 0 8px;
 }
 
@@ -130,20 +128,21 @@ a {
 }
 
 code {
-  font-family: var(--mono);
-  font-size: 14px;
+  font-family: var(--sans);
+  font-variant-caps: all-small-caps;
+  font-size: 15px;
+  letter-spacing: 0.05em;
   padding: 2px 6px;
   border-radius: 4px;
   background: var(--code-bg);
   color: var(--text-h);
 }
 
-/* ticket data: small uppercase mono labels used across the app */
+/* chapter-heading labels: small caps, quietly gilded */
 .eyebrow {
-  font-family: var(--mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-variant-caps: all-small-caps;
+  font-size: 14px;
+  letter-spacing: 0.09em;
   color: var(--text);
 }
 
@@ -155,7 +154,7 @@ code {
 
 ::selection {
   background: var(--accent);
-  color: #fff;
+  color: #fffcf4;
 }
 
 @media (prefers-reduced-motion: reduce) {
