@@ -6,6 +6,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
     margin-bottom: 16px;
 }
 
@@ -15,6 +17,13 @@
 
 .Reports-chart {
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
     padding: 16px 8px 8px;
+}
+
+.Reports-chart .recharts-text {
+    font-family: var(--mono);
+    font-size: 11px;
 }

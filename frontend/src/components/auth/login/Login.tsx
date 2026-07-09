@@ -11,7 +11,9 @@ import AuthContext from '../auth/AuthContext'
 import { showErrorToast } from '../../common/show-error-toast'
 import SpinnerButton from '../../common/spinner-button/SpinnerButton'
 
-const GSI_SCRIPT_SRC = 'https://accounts.google.com/gsi/client'
+// hl pins the button language - without it the widget follows the
+// system locale regardless of the renderButton locale option
+const GSI_SCRIPT_SRC = 'https://accounts.google.com/gsi/client?hl=en'
 
 export default function Login() {
 

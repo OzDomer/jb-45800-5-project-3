@@ -2,7 +2,8 @@ import './VacationCard.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type Vacation from '../../../models/Vacation'
-import { displayDate } from '../../../utils/dates'
+import { displayDate, displayPrice } from '../../../utils/dates'
+import { destinationCode } from '../../../utils/destination-code'
 import useService from '../../../hooks/use-service'
 import VacationsService from '../../../services/auth-aware/VacationsService'
 import { useAppDispatch } from '../../../redux/hooks'
@@ -95,15 +96,26 @@ export default function VacationCard(props: VacationCardProps) {
                 )}
 
                 <h3>{destination}</h3>
+                <span className='VacationCard-code'>{destinationCode(destination)}</span>
             </div>
 
+            {/* the tear line: this card is a boarding pass */}
+            <div className='VacationCard-perforation'></div>
+
             <div className='VacationCard-dates'>
-                {displayDate(startDate)} - {displayDate(endDate)}
+                <span className='VacationCard-label'>departs</span>
+                {displayDate(startDate)}
+                <span className='VacationCard-arrow'>→</span>
+                <span className='VacationCard-label'>returns</span>
+                {displayDate(endDate)}
             </div>
 
             <p className='VacationCard-description'>{description}</p>
 
-            <div className='VacationCard-price'>${price.toLocaleString()}</div>
+            <div className='VacationCard-fare'>
+                <span className='VacationCard-label'>fare</span>
+                <span className='VacationCard-price'>${displayPrice(price)}</span>
+            </div>
         </div>
     )
 }

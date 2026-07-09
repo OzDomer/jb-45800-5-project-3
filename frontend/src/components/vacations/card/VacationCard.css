@@ -1,17 +1,25 @@
+/* the signature element: every vacation card is a boarding pass -
+   photo up top, a perforated tear line, then the ticket data */
+
 .VacationCard {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
     box-shadow: var(--shadow);
     text-align: left;
-    background: var(--bg);
+    background: var(--surface);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.VacationCard:hover {
+    transform: translateY(-3px);
 }
 
 .VacationCard-image {
     position: relative;
-    height: 180px;
+    height: 185px;
 }
 
 .VacationCard-image img {
@@ -25,31 +33,58 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
+    right: 58px;
     margin: 0;
-    padding: 10px 14px;
+    padding: 12px 16px;
     color: #fff;
-    font-size: 22px;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+    font-size: 27px;
+    letter-spacing: 0.05em;
+    background: linear-gradient(transparent, rgba(10, 8, 24, 0.72));
+}
+
+/* invented destination code, stamped in the corner like an airport tag */
+.VacationCard-code {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #fff;
+    padding: 2px 7px;
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    border-radius: 5px;
+    background: rgba(10, 8, 24, 0.35);
 }
 
 .VacationCard-like {
     position: absolute;
     top: 10px;
     left: 10px;
-    font: inherit;
-    font-size: 14px;
-    padding: 4px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 5px 12px;
     border: none;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #444;
+    background: rgba(255, 255, 255, 0.92);
+    color: #3a3d49;
     cursor: pointer;
+    transition: transform 0.15s ease;
 }
 
+/* liked = inked stamp: signal orange, slightly askew */
 .VacationCard-like.liked {
-    background: #ffe3ec;
-    color: #d6336c;
+    background: var(--signal-bg);
+    border: 1.5px solid var(--signal);
+    color: var(--signal);
+    background-color: #fff4ec;
+    transform: rotate(-2deg);
+}
+
+:root[data-theme='dark'] .VacationCard-like.liked {
+    background-color: #3a2417;
 }
 
 span.VacationCard-like {
@@ -70,8 +105,8 @@ span.VacationCard-like {
     padding: 4px 10px;
     border: none;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #444;
+    background: rgba(255, 255, 255, 0.92);
+    color: #3a3d49;
     cursor: pointer;
 }
 
@@ -79,30 +114,81 @@ span.VacationCard-like {
     background: #fff;
 }
 
+/* the tear line with punched notches at both edges */
+.VacationCard-perforation {
+    position: relative;
+    border-top: 2px dashed var(--border);
+    margin-top: 0;
+}
+
+.VacationCard-perforation::before,
+.VacationCard-perforation::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+}
+
+.VacationCard-perforation::before {
+    left: -10px;
+}
+
+.VacationCard-perforation::after {
+    right: -10px;
+}
+
+.VacationCard-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text);
+    opacity: 0.85;
+}
+
 .VacationCard-dates {
-    padding: 8px 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    flex-wrap: wrap;
+    padding: 14px 16px 4px;
+    font-family: var(--mono);
     font-size: 14px;
-    background: var(--accent-bg);
     color: var(--text-h);
+}
+
+.VacationCard-arrow {
+    color: var(--accent);
 }
 
 .VacationCard-description {
     flex: 1;
-    padding: 12px 14px;
+    padding: 8px 16px 12px;
     font-size: 15px;
-    line-height: 1.5;
+    line-height: 1.55;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
+.VacationCard-fare {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0 16px 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+}
+
 .VacationCard-price {
-    margin: 0 14px 14px;
-    padding: 8px 0;
-    text-align: center;
-    border-radius: 6px;
-    background: var(--accent);
-    color: #fff;
-    font-weight: 600;
+    font-family: var(--mono);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent);
 }

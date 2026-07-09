@@ -1,113 +1,176 @@
+/* ============================================================
+   Otherworld Vacations - design tokens
+   an interdimensional travel agency: boarding passes, departure
+   boards, destination codes. porcelain by day, indigo night by
+   night. violet is the portal, orange is the stamp.
+   ============================================================ */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --chart-series: #aa3bff;
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* light: porcelain day */
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --text: #4a4e5c;
+  --text-h: #1b1e28;
+  --border: #dee1e8;
+  --code-bg: #eceef3;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --accent: #5438dc;
+  --accent-bg: rgba(84, 56, 220, 0.08);
+  --accent-border: rgba(84, 56, 220, 0.45);
+  --signal: #e8590c;
+  --signal-bg: rgba(232, 89, 12, 0.1);
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  --chart-series: #5438dc;
+  --shadow: rgba(27, 30, 40, 0.08) 0 10px 24px -8px, rgba(27, 30, 40, 0.05) 0 3px 8px -2px;
+
+  --display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --sans: 'Barlow', system-ui, sans-serif;
+  --mono: 'Space Mono', ui-monospace, monospace;
+
+  font: 16px/1.5 var(--sans);
   color: var(--text);
   background: var(--bg);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+:root[data-theme='dark'] {
+  /* dark: indigo night - a sky, not a void */
+  --bg: #14162b;
+  --surface: #1d2040;
+  --text: #a7abc0;
+  --text-h: #eeeff7;
+  --border: #33375c;
+  --code-bg: #262a4d;
+
+  --accent: #8b7bff;
+  --accent-bg: rgba(139, 123, 255, 0.12);
+  --accent-border: rgba(139, 123, 255, 0.5);
+  --signal: #ff9457;
+  --signal-bg: rgba(255, 148, 87, 0.14);
+
+  --chart-series: #8b7bff;
+  --shadow: rgba(0, 0, 5, 0.45) 0 12px 28px -10px, rgba(0, 0, 5, 0.3) 0 4px 10px -4px;
+
+  color-scheme: dark;
+}
+
+/* no-js fallback: follow the system */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #14162b;
+    --surface: #1d2040;
+    --text: #a7abc0;
+    --text-h: #eeeff7;
+    --border: #33375c;
+    --code-bg: #262a4d;
+    --accent: #8b7bff;
+    --accent-bg: rgba(139, 123, 255, 0.12);
+    --accent-border: rgba(139, 123, 255, 0.5);
+    --signal: #ff9457;
+    --signal-bg: rgba(255, 148, 87, 0.14);
+    --chart-series: #8b7bff;
+    --shadow: rgba(0, 0, 5, 0.45) 0 12px 28px -10px, rgba(0, 0, 5, 0.3) 0 4px 10px -4px;
+    color-scheme: dark;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --chart-series: #ad66fa;
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+/* ------------------------------------------------------------
+   base
+   ------------------------------------------------------------ */
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+body {
+  margin: 0;
+  background: var(--bg);
+  transition: background-color 0.25s ease;
 }
 
 #root {
-  width: 1126px;
+  width: 1180px;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
+main {
+  flex: 1;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
+h1, h2, h3 {
+  font-family: var(--display);
   color: var(--text-h);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 10px;
 }
+
+h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
 p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+a {
+  color: var(--accent);
 }
 
 code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
+  font-family: var(--mono);
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 4px;
   background: var(--code-bg);
+  color: var(--text-h);
+}
+
+/* ticket data: small uppercase mono labels used across the app */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  :root {
+    font-size: 15px;
+  }
+  h2 {
+    font-size: 28px;
+  }
 }

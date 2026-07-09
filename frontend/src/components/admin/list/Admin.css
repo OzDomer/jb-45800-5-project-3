@@ -2,6 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
     padding: 24px 24px 0;
 }
 
@@ -10,15 +12,19 @@
 }
 
 .Admin-toolbar button {
-    font: inherit;
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
     padding: 8px 20px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     background: var(--accent);
     color: #fff;
     cursor: pointer;
 }
 
 .Admin-toolbar button:hover {
-    opacity: 0.9;
+    filter: brightness(1.08);
 }

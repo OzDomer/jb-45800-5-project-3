@@ -1,3 +1,16 @@
 .NotFound {
-    padding: 48px;
+    padding: 64px 24px;
+    text-align: center;
+}
+
+.NotFound h2 {
+    font-size: 72px;
+    margin-bottom: 4px;
+}
+
+.NotFound p {
+    font-family: var(--mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }

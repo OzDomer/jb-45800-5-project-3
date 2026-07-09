@@ -2,30 +2,51 @@
     display: flex;
     align-items: center;
     gap: 24px;
-    padding: 14px 24px;
+    padding: 12px 24px;
     border-bottom: 1px solid var(--border);
+    background: var(--surface);
 }
 
 .Header-logo a {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.08em;
+    color: var(--text-h);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.Header-logo-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.34em;
+    color: var(--accent);
+    margin-top: 2px;
 }
 
 .Header-nav {
     display: flex;
-    gap: 16px;
+    gap: 6px;
     flex: 1;
+    flex-wrap: wrap;
 }
 
 .Header-nav a {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--text);
     text-decoration: none;
-    padding: 4px 8px;
+    padding: 5px 10px;
     border-radius: 6px;
+    border-bottom: 2px solid transparent;
 }
 
 .Header-nav a:hover {
@@ -35,16 +56,24 @@
 .Header-nav a.active {
     color: var(--accent);
     background: var(--accent-bg);
+    border-bottom-color: var(--accent);
+    border-radius: 6px 6px 0 0;
 }
 
 .Header-user {
     display: flex;
     align-items: center;
     gap: 12px;
+    white-space: nowrap;
+}
+
+.Header-user span {
+    font-size: 15px;
 }
 
 .Header-user button {
     font: inherit;
+    font-size: 14px;
     padding: 6px 14px;
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -56,4 +85,33 @@
 .Header-user button:hover {
     color: var(--text-h);
     border-color: var(--accent);
+}
+
+.Header-theme {
+    font-size: 17px;
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-h);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.Header-theme:hover {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+}
+
+@media (max-width: 800px) {
+    .Header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .Header-user span {
+        display: none;
+    }
 }

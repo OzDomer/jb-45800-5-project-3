@@ -2,10 +2,11 @@
     padding: 24px;
     max-width: 640px;
     margin: 0 auto;
+    text-align: center;
 }
 
 .Assistant-subtitle {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     font-size: 15px;
 }
 
@@ -18,10 +19,10 @@
 
 .Assistant-form textarea {
     font: inherit;
-    padding: 10px 12px;
+    padding: 11px 13px;
     border: 1px solid var(--border);
-    border-radius: 8px;
-    background: transparent;
+    border-radius: 10px;
+    background: var(--surface);
     color: var(--text-h);
     resize: vertical;
 }
@@ -34,7 +35,8 @@
 .Assistant-answer {
     text-align: left;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
+    background: var(--surface);
     padding: 16px 20px;
     box-shadow: var(--shadow);
     white-space: pre-wrap;

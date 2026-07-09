@@ -3,12 +3,14 @@ import { useContext } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
 import AuthContext from "../../auth/auth/AuthContext"
 import useUser from "../../../hooks/use-user"
+import useTheme from "../../../hooks/use-theme"
 import Role from "../../../models/Role"
 
 export default function Header() {
 
     const user = useUser()
     const { logout } = useContext(AuthContext)!
+    const { theme, toggleTheme } = useTheme()
     const navigate = useNavigate()
 
     function logMeOut() {
@@ -19,7 +21,10 @@ export default function Header() {
     return (
         <div className="Header">
             <div className="Header-logo">
-                <NavLink to="/">Otherworld</NavLink>
+                <NavLink to="/">
+                    Otherworld
+                    <span className="Header-logo-sub">vacations</span>
+                </NavLink>
             </div>
 
             <nav className="Header-nav">
@@ -49,6 +54,15 @@ export default function Header() {
                 <span>Welcome {user.firstName} {user.lastName}</span>
                 <button onClick={logMeOut}>Logout</button>
             </div>}
+
+            <button
+                className="Header-theme"
+                onClick={toggleTheme}
+                aria-label={theme === 'dark' ? 'switch to light theme' : 'switch to dark theme'}
+                title={theme === 'dark' ? 'switch to light theme' : 'switch to dark theme'}
+            >
+                {theme === 'dark' ? '☀' : '☾'}
+            </button>
         </div>
     )
 }
