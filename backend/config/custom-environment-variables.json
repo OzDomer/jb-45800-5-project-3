@@ -1,0 +1,14 @@
+{
+    "app": {
+        "port": "VACATIONS_PORT",
+        "sync": {
+            "force": "VACATIONS_SYNC_FORCE"
+        }
+    },
+    "db": {
+        "password": "VACATIONS_DB_PASSWORD"
+    },
+    "openai": {
+        "apiKey": "VACATIONS_OPENAI_API_KEY"
+    }
+}

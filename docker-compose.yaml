@@ -32,6 +32,10 @@ services:
     container_name: betterx-backend-compose
     ports:
       - 3010:3000
+    environment:
+      # pass the LLM key from the host shell into the container:
+      # VACATIONS_OPENAI_API_KEY=sk-... docker compose up -d --build
+      - VACATIONS_OPENAI_API_KEY=${VACATIONS_OPENAI_API_KEY}
     build:
       context: ./backend
       dockerfile: Dockerfile.compose
