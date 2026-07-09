@@ -11,14 +11,16 @@
 
 .Footer-brand {
     font-family: var(--display);
-    font-size: 16px;
-    font-weight: 600;
-    font-style: italic;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--text-h);
 }
 
 .Footer-note {
-    font-style: italic;
-    font-size: 14px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--text);
 }

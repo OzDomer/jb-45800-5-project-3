@@ -44,17 +44,16 @@
 
 .VacationCard-caption h3 {
     margin: 0;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 600;
+    font-size: 19px;
+    font-weight: 700;
 }
 
 /* the atlas mark: a quiet plate label beside the name */
 .VacationCard-code {
-    font-variant-caps: all-small-caps;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     color: var(--signal);
     padding: 1px 7px;
     border: 1px solid var(--signal);
@@ -68,10 +67,9 @@
     left: 50%;
     transform: translateX(-50%);
     font-family: var(--sans);
-    font-variant-caps: all-small-caps;
-    font-size: 14px;
-    letter-spacing: 0.06em;
-    padding: 4px 14px;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+    padding: 5px 13px;
     border: none;
     border-radius: 999px;
     background: rgba(255, 252, 244, 0.92);
@@ -131,9 +129,9 @@ span.VacationCard-like {
 }
 
 .VacationCard-label {
-    font-variant-caps: all-small-caps;
-    font-size: 13px;
-    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.12em;
     color: var(--text);
     opacity: 0.9;
 }
@@ -145,7 +143,7 @@ span.VacationCard-like {
     gap: 7px;
     flex-wrap: wrap;
     padding: 10px 6px 2px;
-    font-size: 15px;
+    font-size: 13.5px;
     color: var(--text-h);
 }
 
@@ -157,8 +155,8 @@ span.VacationCard-like {
     flex: 1;
     margin: 8px 8px 12px;
     padding: 0;
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 13px;
+    line-height: 1.65;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
@@ -176,7 +174,7 @@ span.VacationCard-like {
 
 .VacationCard-price {
     font-family: var(--display);
-    font-size: 21px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
     color: var(--accent);
 }
