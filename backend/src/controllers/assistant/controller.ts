@@ -13,9 +13,9 @@ import { connectMcpClient } from "./mcp-client";
  *    approach work would mean publicly exposing the MCP server (a reverse
  *    proxy / tunnel plus the security hardening that comes with a public
  *    endpoint) - infrastructure this system does not otherwise need.
- * 2. The model runs the same number of turns and costs the same tokens either
- *    way - splitting them into separate API requests changes nothing about
- *    inference. What it does change is control:
+ * 2. The model performs the same reasoning turns either way, so the cost is
+ *    comparable - splitting them into separate API requests changes
+ *    visibility and control, not economics:
  * 3. We cap the loop (MAX_TOOL_ROUNDS) so the LLM can never spin unchecked,
  *    and we log every tool call for observability.
  */
