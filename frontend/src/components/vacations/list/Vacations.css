@@ -1,3 +1,59 @@
 .Vacations {
     padding: 24px;
 }
+
+.Vacations-filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.Vacations-filters button {
+    font: inherit;
+    font-size: 15px;
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.Vacations-filters button:hover {
+    color: var(--text-h);
+    border-color: var(--accent);
+}
+
+.Vacations-filters button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.Vacations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .Vacations-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .Vacations-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.Vacations-empty {
+    padding: 32px;
+}
+
+.Vacations-sentinel {
+    height: 1px;
+}
