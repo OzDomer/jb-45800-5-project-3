@@ -1,4 +1,4 @@
-# 🌌 Otherworld Vacations
+# Otherworld Vacations
 
 **Vacation packages to the most legendary destinations that (mostly) do not exist.**
 
