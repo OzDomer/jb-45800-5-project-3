@@ -1,0 +1,41 @@
+# replace all container names accroding to actual project
+services:
+  # docker run --name betterx-db -e=MYSQL_ALLOW_EMPTY_PASSWORD=1 -e=MYSQL_DATABASE=college -e=MYSQL_TCP_PORT=3306 -p 3306:3306 -d shaharsol/betterx-db:1.0
+  database:
+    container_name: betterx-db-compose 
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=college
+      - MYSQL_TCP_PORT=3306
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    build: ./database
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+      
+  # docker run --name betterx-backend-p 3000:3000 -d shaharsol/betterx-backend:3.0
+  backend:
+    container_name: betterx-backend-compose
+    ports:
+      - 3010:3000
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.compose
+    depends_on:
+      database:
+        condition: service_healthy
+  
+  # docker run --name betterx-front -p 6123:80 -d shaharsol/betterx-front:2.0
+  frontend:
+    container_name: betterx-front-compose
+    ports:
+      - 6124:80
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.compose
