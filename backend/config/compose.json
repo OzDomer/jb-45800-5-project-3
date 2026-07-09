@@ -5,6 +5,9 @@
     "mcp": {
         "server": "http://mcp:3005/mcp"
     },
+    "io": {
+        "url": "http://io:3004"
+    },
     "aws": {
         "connection": {
             "endpoint": "http://localstack:4566"

@@ -29,6 +29,12 @@ services:
       - 4510-4559:4510-4559
     image: localstack/localstack:4.4.0
 
+  io:
+    container_name: vacations-io-compose
+    ports:
+      - 3004:3004
+    build: ./io
+
   mcp:
     container_name: vacations-mcp-compose
     ports:

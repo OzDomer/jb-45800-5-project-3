@@ -42,10 +42,26 @@ const vacationsSlice = createSlice({
                 vacation.likedByMe = false
                 vacation.likesCount--
             }
+        },
+        // socket events from OTHER clients: adjust the count, and flip
+        // likedByMe only when it was this user liking from another tab
+        externalLike: (state, action: PayloadAction<{ id: string, isMe: boolean }>) => {
+            const vacation = state.vacations.find(vacation => vacation.id === action.payload.id)
+            if (!vacation) return
+            if (action.payload.isMe && vacation.likedByMe) return
+            vacation.likesCount++
+            if (action.payload.isMe) vacation.likedByMe = true
+        },
+        externalUnlike: (state, action: PayloadAction<{ id: string, isMe: boolean }>) => {
+            const vacation = state.vacations.find(vacation => vacation.id === action.payload.id)
+            if (!vacation) return
+            if (action.payload.isMe && !vacation.likedByMe) return
+            if (vacation.likesCount > 0) vacation.likesCount--
+            if (action.payload.isMe) vacation.likedByMe = false
         }
     }
 })
 
-export const { populate, append, update, remove, like, unlike } = vacationsSlice.actions
+export const { populate, append, update, remove, like, unlike, externalLike, externalUnlike } = vacationsSlice.actions
 
 export default vacationsSlice.reducer

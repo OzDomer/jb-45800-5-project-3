@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast'
 import { Provider as Redux } from 'react-redux'
 import store from '../../redux/store'
 import Auth from '../auth/auth/Auth'
+import Io from '../io/Io'
 import Layout from '../layout/layout/Layout'
 
 function App() {
@@ -14,7 +15,9 @@ function App() {
       <BrowserRouter>
         <Redux store={store}>
           <Auth>
-            <Layout />
+            <Io>
+              <Layout />
+            </Io>
           </Auth>
         </Redux>
       </BrowserRouter>

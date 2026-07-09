@@ -1,7 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
 import { UniqueConstraintError } from "sequelize";
+import { SocketMessages } from "vacations-socket-enums-ozdomer";
 import Like from "../../models/Like";
 import Vacation from "../../models/Vacation";
+import socket from "../../io/io";
 
 export async function like(request: Request<{ vacationId: string }>, response: Response, next: NextFunction) {
     try {
@@ -23,6 +25,14 @@ export async function like(request: Request<{ vacationId: string }>, response: R
         }
 
         response.json({ success: true })
+
+        // push the like to all connected clients; the clientId lets the
+        // originating tab ignore its own echo
+        socket.emit(SocketMessages.LIKE, {
+            clientId: request.header('x-client-id'),
+            vacationId,
+            userId
+        })
     } catch (e) {
         next(e)
     }
@@ -43,6 +53,12 @@ export async function unlike(request: Request<{ vacationId: string }>, response:
         })
 
         response.json({ success: true })
+
+        socket.emit(SocketMessages.UNLIKE, {
+            clientId: request.header('x-client-id'),
+            vacationId,
+            userId
+        })
     } catch (e) {
         next(e)
     }

@@ -28,6 +28,8 @@
     "mysql2": "^3.22.4",
     "openai": "^6.45.0",
     "sequelize-typescript": "^2.1.6",
+    "socket.io-client": "^4.8.3",
+    "vacations-socket-enums-ozdomer": "^1.0.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
