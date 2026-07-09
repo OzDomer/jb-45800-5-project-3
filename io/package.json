@@ -14,7 +14,8 @@
   "type": "commonjs",
   "dependencies": {
     "config": "^4.4.1",
-    "socket.io": "^4.8.3"
+    "socket.io": "^4.8.3",
+    "vacations-socket-enums-ozdomer": "^1.2.0"
   },
   "devDependencies": {
     "ts-node-dev": "^2.0.0",

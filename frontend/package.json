@@ -24,7 +24,7 @@
     "recharts": "^3.9.2",
     "socket.io-client": "^4.8.3",
     "uuid": "^14.0.1",
-    "vacations-socket-enums-ozdomer": "^1.0.0"
+    "vacations-socket-enums-ozdomer": "^1.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -1,5 +1,7 @@
 import './Vacations.css'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { SocketMessages } from 'vacations-socket-enums-ozdomer'
+import IoContext from '../../io/IoContext'
 import useService from '../../../hooks/use-service'
 import useUser from '../../../hooks/use-user'
 import Role from '../../../models/Role'
@@ -44,6 +46,24 @@ export default function Vacations(props: VacationsProps) {
     const sentinelRef = useRef<HTMLDivElement>(null)
 
     const vacationsService = useService(VacationsService)
+    const socket = useContext(IoContext)
+
+    // join the vacations room only while this list is on screen - the io
+    // server emits like updates to room members only. re-join on reconnect
+    // because room membership does not survive a server restart.
+    useEffect(() => {
+        if (!socket) return
+
+        const join = () => socket.emit(SocketMessages.JOIN_VACATIONS)
+
+        join()
+        socket.on('connect', join)
+
+        return () => {
+            socket.off('connect', join)
+            socket.emit(SocketMessages.LEAVE_VACATIONS)
+        }
+    }, [socket])
 
     async function loadPage(selectedFilter: VacationsFilter, reset: boolean) {
         if (isFetchingRef.current) return
