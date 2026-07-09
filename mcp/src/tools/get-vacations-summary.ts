@@ -44,10 +44,15 @@ async function buildSummary() {
 
 export function registerGetVacationsSummaryTool(server: McpServer) {
     server.registerTool(
-        'getVacationsSummary',
+        'otherworld_get_vacations_summary',
         {
-            description: 'Returns precomputed, accurate statistics about the vacations: total count, active/upcoming/ended counts with destinations, average price, cheapest and most expensive, total likes and the most liked destination. ALWAYS prefer this tool over computing statistics yourself.',
+            description: 'Returns precomputed, accurate statistics about the Otherworld vacations: total count, active/upcoming/ended counts with destinations, average price, cheapest and most expensive, total likes and the most liked destination. ALWAYS prefer this tool over computing statistics yourself.',
             inputSchema: z.object({}),
+            annotations: {
+                readOnlyHint: true,
+                idempotentHint: true,
+                openWorldHint: false,
+            },
         },
         async () => handleBackendTool(() => buildSummary())
     )

@@ -16,10 +16,20 @@ export function createBackendClient(jwt?: string): AxiosInstance {
     })
 }
 
-export async function getVacations(jwt?: string) {
+export interface ListVacationsParams {
+    filter?: 'all' | 'liked' | 'active' | 'upcoming'
+    offset?: number
+    limit?: number
+}
+
+export async function getVacations(params: ListVacationsParams = {}, jwt?: string) {
     const client = createBackendClient(jwt)
     const { data } = await client.get('/vacations', {
-        params: { filter: 'all', offset: 0, limit: 1000 }
+        params: {
+            filter: params.filter ?? 'all',
+            offset: params.offset ?? 0,
+            limit: params.limit ?? 1000,
+        }
     })
     return data
 }

@@ -1,5 +1,5 @@
 {
-  "name": "otherworld-mcp",
+  "name": "otherworld-mcp-server",
   "version": "1.0.0",
   "description": "Otherworld MCP server",
   "main": "index.js",

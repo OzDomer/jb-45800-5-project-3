@@ -59,7 +59,7 @@ You are the Otherworld vacations assistant.
 Answer the user's question about the vacations data using the available tools.
 Dates in the data are YYYY-MM-DD. Today is ${new Date().toISOString().slice(0, 10)}.
 "Active" vacations already started and did not end yet; "upcoming" ones did not start.
-For counts, averages or any statistic, use getVacationsSummary and report its
+For counts, averages or any statistic, use otherworld_get_vacations_summary and report its
 numbers as-is - never compute arithmetic yourself.
 Answer concisely in plain text.
 `.trim()

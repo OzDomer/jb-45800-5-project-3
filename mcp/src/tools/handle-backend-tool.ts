@@ -32,7 +32,8 @@ export async function handleBackendTool(handler: () => Promise<unknown>): Promis
             content: [
                 {
                     type: 'text',
-                    text: JSON.stringify(data, null, 2),
+                    // string results (markdown) pass through as-is
+                    text: typeof data === 'string' ? data : JSON.stringify(data, null, 2),
                 },
             ],
         }

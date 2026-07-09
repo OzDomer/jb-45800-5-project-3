@@ -94,10 +94,12 @@ The assistant page answers questions like *"how many vacations are active right 
 
 1. **A hosted MCP tool is executed by OpenAI's servers**, which must be able to reach the MCP server's URL. Ours lives inside the compose network (`http://mcp:3005`) — unreachable from OpenAI's cloud. Making the hosted approach work would require publicly exposing the MCP server (reverse proxy / tunnel, plus the security hardening any public endpoint demands) — infrastructure this system does not otherwise need.
 2. **The cost is comparable.** The model performs the same reasoning turns either way — a hosted loop bills its internal turns just like our explicit requests do. The real difference is not price but visibility: in the local loop, every request's token usage is ours to measure, log and cap.
-3. **Control beats delegation.** The loop is capped (`MAX_TOOL_ROUNDS = 5`) so the LLM can never spin unchecked, and every tool call is logged (`docker logs otherworld-backend-compose` shows `assistant tool call (round 1): getVacationsSummary`).
-4. **LLMs are bad at arithmetic**, so statistics come from code, not the model: the MCP server exposes a `getVacationsSummary` tool with precomputed counts and averages, and the model is instructed to report those numbers as-is. The average price is exact to the cent, every time.
+3. **Control beats delegation.** The loop is capped (`MAX_TOOL_ROUNDS = 5`) so the LLM can never spin unchecked, and every tool call is logged (`docker logs otherworld-backend-compose` shows `assistant tool call (round 1): otherworld_get_vacations_summary`).
+4. **LLMs are bad at arithmetic**, so statistics come from code, not the model: the MCP server exposes an `otherworld_get_vacations_summary` tool with precomputed counts and averages, and the model is instructed to report those numbers as-is. The average price is exact to the cent, every time.
 
-The full auth chain is preserved end to end: frontend → backend → MCP server → backend REST — the user's JWT rides every hop, and the backend remains the single source of truth for auth.
+The full auth chain is preserved end to end: frontend → backend → MCP server → backend REST — the user's JWT rides every hop, and the backend remains the single source of truth for auth. Because the JWT identifies the caller, the tools are personal too: `otherworld_list_vacations` with `filter: "liked"` answers *"which vacations did I like?"* for whoever is asking.
+
+The server follows [Anthropic's MCP best practices](https://github.com/anthropics/skills): service-prefixed snake_case tool names (`otherworld_list_vacations`) so tools cannot collide with other mounted MCP servers, tool annotations (`readOnlyHint` / `idempotentHint` / `openWorldHint`), offset/limit pagination with `has_more` metadata instead of unbounded dumps, dual response formats (a token-friendly markdown table by default, full JSON on request), and DNS-rebinding protection on the Streamable HTTP endpoint.
 
 ## Live likes over socket.io rooms
 
