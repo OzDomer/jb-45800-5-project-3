@@ -17,6 +17,9 @@
     "openai": {
         "apiKey": ""
     },
+    "mcp": {
+        "server": "http://localhost:3005/mcp"
+    },
     "aws": {
         "bucket": "vacations",
         "publicUrl": "http://localhost:4566",

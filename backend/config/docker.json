@@ -2,6 +2,9 @@
     "db": {
         "host": "host.docker.internal"
     },
+    "mcp": {
+        "server": "http://host.docker.internal:3005/mcp"
+    },
     "aws": {
         "connection": {
             "endpoint": "http://host.docker.internal:4566"

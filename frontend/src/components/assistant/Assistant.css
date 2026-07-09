@@ -1,3 +1,42 @@
 .Assistant {
     padding: 24px;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.Assistant-subtitle {
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.Assistant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.Assistant-form textarea {
+    font: inherit;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-h);
+    resize: vertical;
+}
+
+.Assistant-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.Assistant-answer {
+    text-align: left;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: var(--shadow);
+    white-space: pre-wrap;
+    line-height: 1.6;
 }

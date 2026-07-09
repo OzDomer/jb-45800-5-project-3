@@ -38,7 +38,7 @@ export const vacationIdValidator = z.object({
 export const listVacationsValidator = z.object({
     filter: z.enum(['all', 'liked', 'active', 'upcoming'], 'unknown vacations filter').default('all'),
     offset: z.coerce.number('offset must be a number').int().min(0, 'offset cannot be negative').default(0),
-    limit: z.coerce.number('limit must be a number').int().min(1, 'limit must be at least 1').max(100, 'limit must be at most 100').default(9),
+    limit: z.coerce.number('limit must be a number').int().min(1, 'limit must be at least 1').max(1000, 'limit must be at most 1000').default(9),
 })
 
 export type ListVacationsQuery = z.infer<typeof listVacationsValidator>

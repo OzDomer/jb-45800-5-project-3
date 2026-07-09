@@ -27,6 +27,14 @@ services:
       - 4510-4559:4510-4559
     image: localstack/localstack:4.4.0
 
+  mcp:
+    container_name: vacations-mcp-compose
+    ports:
+      - 3005:3005
+    build: ./mcp
+    depends_on:
+      - backend
+
   # docker run --name betterx-backend-p 3000:3000 -d shaharsol/betterx-backend:3.0
   backend:
     container_name: betterx-backend-compose

@@ -10,6 +10,7 @@ import authRouter from './routers/auth'
 import vacationsRouter from './routers/vacations'
 import reportsRouter from './routers/reports'
 import itineraryRouter from './routers/itinerary'
+import assistantRouter from './routers/assistant'
 import authEnforce from './middlewares/auth-enforce'
 import sequelize from './db/sequelize'
 import { createAppBucketIfNotExist, uploadSeedImagesIfMissing } from './aws/aws'
@@ -27,6 +28,7 @@ app.use('/', fileUpload()) // handles multipart/form-data requests (vacation ima
 app.use('/vacations', vacationsRouter)
 app.use('/reports', reportsRouter)
 app.use('/itinerary', itineraryRouter)
+app.use('/assistant', assistantRouter)
 
 // not found
 app.use('/', notFound)

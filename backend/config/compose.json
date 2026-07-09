@@ -2,6 +2,9 @@
     "db": {
         "host": "database"
     },
+    "mcp": {
+        "server": "http://mcp:3005/mcp"
+    },
     "aws": {
         "connection": {
             "endpoint": "http://localstack:4566"
