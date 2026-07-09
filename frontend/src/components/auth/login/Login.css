@@ -1,0 +1,60 @@
+.Login form,
+.Register form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 320px;
+    margin: 48px auto;
+    padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: left;
+}
+
+.Login form h2,
+.Register form h2 {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.Login input,
+.Register input {
+    font: inherit;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-h);
+}
+
+.Login input:focus,
+.Register input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.Login .error,
+.Register .error {
+    color: #d64545;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+.Login .SpinnerButton,
+.Register .SpinnerButton {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.Login .switch-auth,
+.Register .switch-auth {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 16px;
+}
+
+.Login .switch-auth a,
+.Register .switch-auth a {
+    color: var(--accent);
+}

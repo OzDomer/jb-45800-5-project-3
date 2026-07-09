@@ -1,0 +1,59 @@
+.Header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.Header-logo a {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.Header-nav {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+}
+
+.Header-nav a {
+    color: var(--text);
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.Header-nav a:hover {
+    color: var(--text-h);
+}
+
+.Header-nav a.active {
+    color: var(--accent);
+    background: var(--accent-bg);
+}
+
+.Header-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.Header-user button {
+    font: inherit;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.Header-user button:hover {
+    color: var(--text-h);
+    border-color: var(--accent);
+}

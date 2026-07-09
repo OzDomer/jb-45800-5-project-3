@@ -1,0 +1,15 @@
+.About {
+    padding: 24px 48px;
+    text-align: left;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.About section {
+    margin-bottom: 24px;
+}
+
+.About h3 {
+    color: var(--text-h);
+    margin-bottom: 8px;
+}

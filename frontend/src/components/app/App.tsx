@@ -1,14 +1,23 @@
 import './App.css'
-import Layout from '../layout/layout/Layout'
 import { BrowserRouter } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import { Provider as Redux } from 'react-redux'
+import store from '../../redux/store'
+import Auth from '../auth/auth/Auth'
+import Layout from '../layout/layout/Layout'
 
 function App() {
 
   return (
     <>
-        <BrowserRouter>
+      <Toaster position="top-right" />
+      <BrowserRouter>
+        <Redux store={store}>
+          <Auth>
             <Layout />
-        </BrowserRouter>
+          </Auth>
+        </Redux>
+      </BrowserRouter>
     </>
   )
 }
