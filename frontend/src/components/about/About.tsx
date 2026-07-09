@@ -8,7 +8,7 @@ export default function About() {
             <section>
                 <h3>The system</h3>
                 <p>
-                    This vacations system lets registered users browse vacation packages to the
+                    Otherworld Vacations lets registered users browse vacation packages to the
                     most legendary destinations that (mostly) do not exist, and tag the ones they
                     love with a like. Administrators manage the vacation catalog and track
                     popularity through live reports and CSV exports. An AI travel agent is

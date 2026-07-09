@@ -1,20 +1,20 @@
 {
     "app": {
-        "port": "VACATIONS_PORT",
+        "port": "OTHERWORLD_PORT",
         "sync": {
-            "force": "VACATIONS_SYNC_FORCE"
+            "force": "OTHERWORLD_SYNC_FORCE"
         }
     },
     "db": {
-        "password": "VACATIONS_DB_PASSWORD"
+        "password": "OTHERWORLD_DB_PASSWORD"
     },
     "openai": {
-        "apiKey": "VACATIONS_OPENAI_API_KEY"
+        "apiKey": "OTHERWORLD_OPENAI_API_KEY"
     },
     "mcp": {
-        "server": "VACATIONS_MCP_SERVER"
+        "server": "OTHERWORLD_MCP_SERVER"
     },
     "google": {
-        "clientId": "VACATIONS_GOOGLE_CLIENT_ID"
+        "clientId": "OTHERWORLD_GOOGLE_CLIENT_ID"
     }
 }

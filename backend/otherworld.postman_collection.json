@@ -1,0 +1,188 @@
+{
+	"info": {
+		"name": "Otherworld Vacations",
+		"description": "Full API collection for the Otherworld Vacations backend. Run 'Auth / Login (admin)' or 'Auth / Login (user)' first - they store the jwt in a collection variable used by every other request.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:3000" },
+		{ "key": "jwt", "value": "" },
+		{ "key": "vacationId", "value": "" }
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }]
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/auth/signup", "host": ["{{baseUrl}}"], "path": ["auth", "signup"] },
+						"body": { "mode": "raw", "raw": "{\n  \"firstName\": \"New\",\n  \"lastName\": \"User\",\n  \"email\": \"new.user@example.com\",\n  \"password\": \"test1234\"\n}" }
+					},
+					"event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 200) pm.collectionVariables.set('jwt', pm.response.json().jwt)"], "type": "text/javascript" } }]
+				},
+				{
+					"name": "Login (admin)",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] },
+						"body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@otherworld.com\",\n  \"password\": \"admin1234\"\n}" }
+					},
+					"event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 200) pm.collectionVariables.set('jwt', pm.response.json().jwt)"], "type": "text/javascript" } }]
+				},
+				{
+					"name": "Login (user)",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] },
+						"body": { "mode": "raw", "raw": "{\n  \"email\": \"user1@otherworld.com\",\n  \"password\": \"user1234\"\n}" }
+					},
+					"event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 200) pm.collectionVariables.set('jwt', pm.response.json().jwt)"], "type": "text/javascript" } }]
+				},
+				{
+					"name": "Google sign-in",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/auth/google", "host": ["{{baseUrl}}"], "path": ["auth", "google"] },
+						"body": { "mode": "raw", "raw": "{\n  \"credential\": \"<google id token from the sign-in button>\"\n}" },
+						"description": "The credential is a google id token produced by the sign-in button in the frontend - it cannot be crafted manually."
+					}
+				}
+			]
+		},
+		{
+			"name": "Vacations",
+			"item": [
+				{
+					"name": "List (filters + paging)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/vacations?filter=all&offset=0&limit=9",
+							"host": ["{{baseUrl}}"],
+							"path": ["vacations"],
+							"query": [
+								{ "key": "filter", "value": "all", "description": "all | liked | active | upcoming (one at a time)" },
+								{ "key": "offset", "value": "0" },
+								{ "key": "limit", "value": "9" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get single",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/vacations/{{vacationId}}", "host": ["{{baseUrl}}"], "path": ["vacations", "{{vacationId}}"] }
+					}
+				},
+				{
+					"name": "Create (admin, multipart)",
+					"request": {
+						"method": "POST",
+						"url": { "raw": "{{baseUrl}}/vacations", "host": ["{{baseUrl}}"], "path": ["vacations"] },
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{ "key": "destination", "value": "Krypton", "type": "text" },
+								{ "key": "description", "value": "A super getaway under a red sun with cape-flying lessons included.", "type": "text" },
+								{ "key": "startDate", "value": "2027-05-01", "type": "text" },
+								{ "key": "endDate", "value": "2027-05-10", "type": "text" },
+								{ "key": "price", "value": "1234.50", "type": "text" },
+								{ "key": "image", "type": "file", "src": [] }
+							]
+						},
+						"description": "Requires the admin jwt. Attach a jpeg/png file in the image field."
+					}
+				},
+				{
+					"name": "Update (admin, image optional)",
+					"request": {
+						"method": "PATCH",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/vacations/{{vacationId}}", "host": ["{{baseUrl}}"], "path": ["vacations", "{{vacationId}}"] },
+						"body": { "mode": "raw", "raw": "{\n  \"destination\": \"Krypton Prime\",\n  \"description\": \"A super getaway under a red sun with cape-flying lessons included.\",\n  \"startDate\": \"2027-05-01\",\n  \"endDate\": \"2027-05-12\",\n  \"price\": 2000\n}" }
+					}
+				},
+				{
+					"name": "Delete (admin)",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseUrl}}/vacations/{{vacationId}}", "host": ["{{baseUrl}}"], "path": ["vacations", "{{vacationId}}"] }
+					}
+				},
+				{
+					"name": "Like",
+					"request": {
+						"method": "POST",
+						"url": { "raw": "{{baseUrl}}/vacations/{{vacationId}}/like", "host": ["{{baseUrl}}"], "path": ["vacations", "{{vacationId}}", "like"] }
+					}
+				},
+				{
+					"name": "Unlike",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseUrl}}/vacations/{{vacationId}}/like", "host": ["{{baseUrl}}"], "path": ["vacations", "{{vacationId}}", "like"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Reports (admin)",
+			"item": [
+				{
+					"name": "Likes per destination",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/reports/likes", "host": ["{{baseUrl}}"], "path": ["reports", "likes"] }
+					}
+				},
+				{
+					"name": "CSV export",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseUrl}}/reports/csv", "host": ["{{baseUrl}}"], "path": ["reports", "csv"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "AI",
+			"item": [
+				{
+					"name": "Itinerary",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/itinerary", "host": ["{{baseUrl}}"], "path": ["itinerary"] },
+						"body": { "mode": "raw", "raw": "{\n  \"vacationId\": \"{{vacationId}}\"\n}" },
+						"description": "Requires OTHERWORLD_OPENAI_API_KEY on the backend; answers 503 with a friendly message otherwise."
+					}
+				},
+				{
+					"name": "Assistant (MCP)",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/assistant", "host": ["{{baseUrl}}"], "path": ["assistant"] },
+						"body": { "mode": "raw", "raw": "{\n  \"prompt\": \"How many vacations are active right now?\"\n}" },
+						"description": "Runs through the MCP server. Requires the mcp service and OTHERWORLD_OPENAI_API_KEY."
+					}
+				}
+			]
+		}
+	]
+}

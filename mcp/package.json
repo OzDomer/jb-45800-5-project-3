@@ -1,7 +1,7 @@
 {
-  "name": "vacations-mcp",
+  "name": "otherworld-mcp",
   "version": "1.0.0",
-  "description": "Vacations MCP server",
+  "description": "Otherworld MCP server",
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/app.ts",

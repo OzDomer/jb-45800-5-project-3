@@ -19,7 +19,7 @@ export default function Header() {
     return (
         <div className="Header">
             <div className="Header-logo">
-                <NavLink to="/">vacations</NavLink>
+                <NavLink to="/">Otherworld</NavLink>
             </div>
 
             <nav className="Header-nav">

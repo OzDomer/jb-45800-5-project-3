@@ -7,7 +7,7 @@ import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/
 // frontend -> backend -> mcp server -> backend rest api
 export async function connectMcpClient(jwt: string): Promise<Client> {
     const client = new Client({
-        name: 'vacations-backend',
+        name: 'otherworld-backend',
         version: '1.0.0',
     })
 

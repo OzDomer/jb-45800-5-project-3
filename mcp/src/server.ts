@@ -6,7 +6,7 @@ import { registerGetVacationsSummaryTool } from './tools/get-vacations-summary.j
 export function createMcpServer() {
     const server = new McpServer(
         {
-            name: 'vacations-mcp',
+            name: 'otherworld-mcp',
             version: '1.0.0',
         },
         {

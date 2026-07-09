@@ -55,7 +55,7 @@ export async function ask(request: Request<object, object, { prompt: string }>, 
         }))
 
         const systemPrompt = `
-You are the vacations system assistant.
+You are the Otherworld vacations assistant.
 Answer the user's question about the vacations data using the available tools.
 Dates in the data are YYYY-MM-DD. Today is ${new Date().toISOString().slice(0, 10)}.
 "Active" vacations already started and did not end yet; "upcoming" ones did not start.

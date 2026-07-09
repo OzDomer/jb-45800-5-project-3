@@ -1,8 +1,8 @@
 {
     "app": {
-        "port": "VACATIONS_MCP_PORT"
+        "port": "OTHERWORLD_MCP_PORT"
     },
     "backend": {
-        "url": "VACATIONS_BACKEND_URL"
+        "url": "OTHERWORLD_BACKEND_URL"
     }
 }

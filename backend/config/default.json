@@ -1,7 +1,7 @@
 {
     "app": {
         "port": 3000,
-        "name": "vacationsDev",
+        "name": "Otherworld Dev",
         "sync": {
             "force": false
         },
@@ -12,7 +12,7 @@
         "port": 3306,
         "username": "root",
         "password": "",
-        "database": "vacations"
+        "database": "otherworld"
     },
     "openai": {
         "apiKey": ""
@@ -27,7 +27,7 @@
         "url": "http://localhost:3004"
     },
     "aws": {
-        "bucket": "vacations",
+        "bucket": "otherworld",
         "publicUrl": "http://localhost:4566",
         "connection": {
             "region": "us-east-1",

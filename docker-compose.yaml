@@ -2,12 +2,12 @@
 services:
   # docker run --name betterx-db -e=MYSQL_ALLOW_EMPTY_PASSWORD=1 -e=MYSQL_DATABASE=college -e=MYSQL_TCP_PORT=3306 -p 3306:3306 -d shaharsol/betterx-db:1.0
   database:
-    container_name: betterx-db-compose
+    container_name: otherworld-db-compose
     volumes:
-      - vacations-mysql-data:/var/lib/mysql
+      - otherworld-mysql-data:/var/lib/mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
-      - MYSQL_DATABASE=vacations
+      - MYSQL_DATABASE=otherworld
       - MYSQL_TCP_PORT=3306
     expose:
       - 3306
@@ -23,20 +23,20 @@ services:
       
   # docker run --name localstack -d -it -p 4566:4566 -p 4510-4559:4510-4559 localstack/localstack:4.4.0
   localstack:
-    container_name: localstack-compose
+    container_name: otherworld-localstack-compose
     ports:
       - 4566:4566
       - 4510-4559:4510-4559
     image: localstack/localstack:4.4.0
 
   io:
-    container_name: vacations-io-compose
+    container_name: otherworld-io-compose
     ports:
       - 3004:3004
     build: ./io
 
   mcp:
-    container_name: vacations-mcp-compose
+    container_name: otherworld-mcp-compose
     ports:
       - 3005:3005
     build: ./mcp
@@ -45,13 +45,13 @@ services:
 
   # docker run --name betterx-backend-p 3000:3000 -d shaharsol/betterx-backend:3.0
   backend:
-    container_name: betterx-backend-compose
+    container_name: otherworld-backend-compose
     ports:
       - 3010:3000
     environment:
       # pass the LLM key from the host shell into the container:
-      # VACATIONS_OPENAI_API_KEY=sk-... docker compose up -d --build
-      - VACATIONS_OPENAI_API_KEY=${VACATIONS_OPENAI_API_KEY}
+      # OTHERWORLD_OPENAI_API_KEY=sk-... docker compose up -d --build
+      - OTHERWORLD_OPENAI_API_KEY=${OTHERWORLD_OPENAI_API_KEY}
     build:
       context: ./backend
       dockerfile: Dockerfile.compose
@@ -61,7 +61,7 @@ services:
   
   # docker run --name betterx-front -p 6123:80 -d shaharsol/betterx-front:2.0
   frontend:
-    container_name: betterx-front-compose
+    container_name: otherworld-front-compose
     ports:
       - 6124:80
     build:
@@ -69,4 +69,4 @@ services:
       dockerfile: Dockerfile.compose
 
 volumes:
-  vacations-mysql-data:
+  otherworld-mysql-data:

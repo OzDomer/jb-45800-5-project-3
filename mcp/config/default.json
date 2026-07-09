@@ -1,7 +1,7 @@
 {
     "app": {
         "port": 3005,
-        "name": "Vacations MCP",
+        "name": "Otherworld MCP",
         "host": "0.0.0.0"
     },
     "backend": {

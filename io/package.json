@@ -1,7 +1,7 @@
 {
-  "name": "io",
+  "name": "otherworld-io",
   "version": "1.0.0",
-  "description": "socket.io relay for the vacations system",
+  "description": "socket.io relay for the otherworld vacations system",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
