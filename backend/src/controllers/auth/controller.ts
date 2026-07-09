@@ -3,7 +3,10 @@ import { createHmac } from "crypto";
 import { sign } from "jsonwebtoken";
 import config from 'config'
 import { UniqueConstraintError } from "sequelize";
+import { OAuth2Client } from "google-auth-library";
 import User from "../../models/User";
+
+const googleClient = new OAuth2Client(config.get<string>('google.clientId'))
 
 export function hashPassword(plainTextPassword: string): string {
     if (!plainTextPassword) return
@@ -49,6 +52,51 @@ export async function login(request: Request<object, object, { email: string, pa
         if (!user) return next({
             status: 401,
             message: 'wrong email or password'
+        })
+
+        response.json({ jwt: generateJwt(user) })
+    } catch (e) {
+        next(e)
+    }
+}
+
+export async function google(request: Request<object, object, { credential: string }>, response: Response, next: NextFunction) {
+    try {
+        const { credential } = request.body
+
+        // the google id token is verified server-side against our client id -
+        // the backend stays the single source of truth for auth
+        let payload
+        try {
+            const ticket = await googleClient.verifyIdToken({
+                idToken: credential,
+                audience: config.get<string>('google.clientId'),
+            })
+            payload = ticket.getPayload()
+        } catch {
+            return next({
+                status: 401,
+                message: 'google sign-in could not be verified, please try again'
+            })
+        }
+
+        if (!payload?.email) {
+            return next({
+                status: 401,
+                message: 'google sign-in did not provide an email address'
+            })
+        }
+
+        // same email = same account, whether it was created with a password
+        // or with google. google users are stored without a password.
+        const [user] = await User.findOrCreate({
+            where: { email: payload.email },
+            defaults: {
+                firstName: (payload.given_name || payload.email.split('@')[0]).slice(0, 30),
+                lastName: (payload.family_name || '-').slice(0, 30),
+                email: payload.email,
+                password: null,
+            }
         })
 
         response.json({ jwt: generateJwt(user) })

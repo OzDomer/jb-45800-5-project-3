@@ -15,6 +15,11 @@ class AuthService {
         return data
     }
 
+    async google(credential: string): Promise<Jwt> {
+        const { data } = await axios.post<Jwt>(`${import.meta.env.VITE_REST_SERVER_URL}/auth/google`, { credential })
+        return data
+    }
+
 }
 
 const authService = new AuthService()

@@ -54,6 +54,28 @@
     margin-top: 16px;
 }
 
+.Login-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 14px 0 10px;
+    font-size: 13px;
+    color: var(--text);
+}
+
+.Login-divider::before,
+.Login-divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid var(--border);
+}
+
+.Login-google {
+    display: flex;
+    justify-content: center;
+    min-height: 44px;
+}
+
 .Login .switch-auth a,
 .Register .switch-auth a {
     color: var(--accent);

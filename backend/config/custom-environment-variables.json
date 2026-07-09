@@ -13,5 +13,8 @@
     },
     "mcp": {
         "server": "VACATIONS_MCP_SERVER"
+    },
+    "google": {
+        "clientId": "VACATIONS_GOOGLE_CLIENT_ID"
     }
 }

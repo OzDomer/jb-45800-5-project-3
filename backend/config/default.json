@@ -17,6 +17,9 @@
     "openai": {
         "apiKey": ""
     },
+    "google": {
+        "clientId": "822187620292-9eatvc133fidpgt1f220b6d33m8q8jf1.apps.googleusercontent.com"
+    },
     "mcp": {
         "server": "http://localhost:3005/mcp"
     },
