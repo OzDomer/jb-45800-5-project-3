@@ -99,7 +99,7 @@ The assistant page answers questions like *"how many vacations are active right 
 
 The full auth chain is preserved end to end: frontend → backend → MCP server → backend REST — the user's JWT rides every hop, and the backend remains the single source of truth for auth. Because the JWT identifies the caller, the tools are personal too: `otherworld_list_vacations` with `filter: "liked"` answers *"which vacations did I like?"* for whoever is asking.
 
-The server follows [Anthropic's MCP best practices](https://github.com/anthropics/skills): service-prefixed snake_case tool names (`otherworld_list_vacations`) so tools cannot collide with other mounted MCP servers, tool annotations (`readOnlyHint` / `idempotentHint` / `openWorldHint`), offset/limit pagination with `has_more` metadata instead of unbounded dumps, dual response formats (a token-friendly markdown table by default, full JSON on request), and DNS-rebinding protection on the Streamable HTTP endpoint.
+The server follows [MCP server best practices](https://modelcontextprotocol.io/docs/concepts/tools): service-prefixed snake_case tool names (`otherworld_list_vacations`) so tools cannot collide with other mounted MCP servers, tool annotations (`readOnlyHint` / `idempotentHint` / `openWorldHint`), offset/limit pagination with `has_more` metadata instead of unbounded dumps, dual response formats (a token-friendly markdown table by default, full JSON on request), and DNS-rebinding protection on the Streamable HTTP endpoint.
 
 ## Live likes over socket.io rooms
 
