@@ -34,6 +34,15 @@ export const vacationIdValidator = z.object({
     vacationId: z.uuid('vacation id must be a valid uuid'),
 })
 
+// exactly one filter applies per request (singular filters)
+export const listVacationsValidator = z.object({
+    filter: z.enum(['all', 'liked', 'active', 'upcoming'], 'unknown vacations filter').default('all'),
+    offset: z.coerce.number('offset must be a number').int().min(0, 'offset cannot be negative').default(0),
+    limit: z.coerce.number('limit must be a number').int().min(1, 'limit must be at least 1').max(100, 'limit must be at most 100').default(9),
+})
+
+export type ListVacationsQuery = z.infer<typeof listVacationsValidator>
+
 const imageFileValidator = z.looseObject({
     mimetype: z.enum(['image/jpeg', 'image/png'], 'image must be a jpeg or png file'),
 }, 'please attach a vacation image')

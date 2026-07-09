@@ -1,6 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
+import { Op, type WhereOptions } from "sequelize";
 import Vacation from "../../models/Vacation";
 import Like from "../../models/Like";
+import User from "../../models/User";
+import type { ListVacationsQuery } from "./validator";
 
 // MySQL returns DECIMAL columns as strings - serialize price as a number
 export function serializeVacation(vacation: Vacation) {
@@ -8,6 +11,69 @@ export function serializeVacation(vacation: Vacation) {
     return {
         ...plain,
         price: Number(plain.price)
+    }
+}
+
+function serializeVacationWithLikes(vacation: Vacation, userId: string) {
+    const { likers = [], ...plain } = vacation.get({ plain: true })
+    return {
+        ...plain,
+        price: Number(plain.price),
+        likesCount: likers.length,
+        likedByMe: likers.some((liker: { id: string }) => liker.id === userId)
+    }
+}
+
+// DATEONLY columns compare against a plain YYYY-MM-DD string in local time
+function todayDateOnly(): string {
+    const now = new Date()
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+}
+
+export async function getVacations(request: Request, response: Response, next: NextFunction) {
+    try {
+        const { userId } = request
+        const { filter, offset, limit } = request.validatedQuery as ListVacationsQuery
+
+        const today = todayDateOnly()
+
+        let where: WhereOptions = {}
+
+        switch (filter) {
+            case 'active':
+                where = {
+                    startDate: { [Op.lte]: today },
+                    endDate: { [Op.gte]: today }
+                }
+                break
+            case 'upcoming':
+                where = { startDate: { [Op.gt]: today } }
+                break
+            case 'liked': {
+                // resolve my liked vacation ids first, so the likers include
+                // below still holds ALL likers (needed for likesCount)
+                const myLikes = await Like.findAll({ where: { userId }, attributes: ['vacationId'] })
+                where = { id: { [Op.in]: myLikes.map(({ vacationId }) => vacationId) } }
+                break
+            }
+        }
+
+        const vacations = await Vacation.findAll({
+            where,
+            include: [{
+                model: User,
+                as: 'likers',
+                attributes: ['id'],
+                through: { attributes: [] }
+            }],
+            order: [['startDate', 'ASC']],
+            limit,
+            offset
+        })
+
+        response.json(vacations.map(vacation => serializeVacationWithLikes(vacation, userId)))
+    } catch (e) {
+        next(e)
     }
 }
 
