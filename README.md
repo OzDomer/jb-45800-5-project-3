@@ -60,6 +60,8 @@ OTHERWORLD_OPENAI_API_KEY=sk-your-key docker compose up -d --build
 $env:OTHERWORLD_OPENAI_API_KEY = 'sk-your-key'; docker compose up -d --build
 ```
 
+Or, for repeat runs, copy `.env.example` to `.env` (gitignored), put the key there once, and just run `docker compose up -d --build` — compose reads it automatically.
+
 Then open **http://localhost:6124**.
 
 > **No OpenAI key?** `docker compose up -d --build` works without it — the entire site runs normally, and only the two AI pages answer with a friendly "AI features are not configured on this server".
@@ -118,6 +120,10 @@ This project deviates from the keyed-hash approach shown in class (HMAC-SHA256 w
 **What it changes in the code:** salted hashes are not queryable, so login can no longer be `WHERE email = ? AND password = HASH(?)`. Instead the user is fetched by email and the password is verified with `bcrypt.compare`, which extracts the salt from the stored hash and re-derives it. Users created through Google sign-in have no password at all, and classic login rejects them with the same "wrong email or password" as any bad credential — no information leak about *why* it failed.
 
 The implementation uses `bcryptjs` (pure JS) rather than the native `bcrypt` module, which would require a C++ build toolchain inside the `node:alpine` docker image for no benefit at this scale.
+
+### Google sign-in — which OAuth flow and why
+
+Google sign-in uses **OpenID Connect ID-token verification** rather than the traditional server-side authorization-code flow: Google hands the browser a signed ID token, and the backend verifies its signature and audience (`google-auth-library`) before issuing the same JWT as a classic login. The authorization-code flow — redirects, a registered callback URL, exchanging a code plus a client secret for tokens — is what you need when the server must *act on Google APIs on the user's behalf* (authorization). This app only needs to know *who the user is* (authentication), so it uses the lighter flow Google recommends for that case, with no client secret to protect and no callback plumbing. The backend remains the single source of truth either way — it never trusts the browser's word, only Google's signature.
 
 ## Live likes over socket.io rooms
 

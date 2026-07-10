@@ -12,6 +12,8 @@ services:
     expose:
       - 3306
     ports:
+      # published on purpose: the development workflow runs the backend on
+      # the host (npm run dev) against this dockerized mysql
       - 3306:3306
     build: ./database
     healthcheck:
@@ -35,10 +37,12 @@ services:
       - 3004:3004
     build: ./io
 
+  # mcp server - compose-network only: nothing on the host needs it,
+  # only the backend talks to it (http://mcp:3005)
   mcp:
     container_name: otherworld-mcp-compose
-    ports:
-      - 3005:3005
+    expose:
+      - 3005
     build: ./mcp
     depends_on:
       - backend
