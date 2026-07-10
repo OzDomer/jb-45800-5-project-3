@@ -1,5 +1,7 @@
 # Otherworld Vacations
 
+![tests](https://github.com/OzDomer/jb-45800-5-project-3/actions/workflows/tests.yml/badge.svg)
+
 **Vacation packages to the most legendary destinations that (mostly) do not exist.**
 
 Registered users browse vacation cards to Hogwarts, Middle-earth, Bikini Bottom and nine more fictional destinations, and tag the ones they love with a like — live, over sockets. Administrators manage the catalog and track popularity with a report chart and CSV export. An AI travel agent plans day-by-day itineraries, and an MCP-powered assistant answers free-text questions about the data.
