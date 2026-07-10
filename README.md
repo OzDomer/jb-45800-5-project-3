@@ -1,6 +1,6 @@
 # Otherworld Vacations
 
-![tests](https://github.com/OzDomer/jb-45800-5-project-3/actions/workflows/tests.yml/badge.svg)
+![tests](https://github.com/OzDomer/jb-45800-5-project-3/actions/workflows/tests.yml/badge.svg?branch=main)
 
 **Vacation packages to the most legendary destinations that (mostly) do not exist.**
 
