@@ -18,13 +18,23 @@ import { sign } from 'jsonwebtoken'
 import config from 'config'
 import app, { init } from "../app"
 import sequelize from '../db/sequelize'
+import User from '../models/User'
+import Like from '../models/Like'
 import { Role } from '../models/enums'
 
-// the seeded user1@otherworld.com (Peter Pan, 5 seeded likes)
-const SEEDED_USER1_ID = 'bfb6cd40-fbed-4e78-8217-6964240b7536'
-
 const key = config.get<string>('app.encryptionKey')
-const userJwt = sign({ id: SEEDED_USER1_ID, role: Role.User }, key, { expiresIn: '1h' })
+
+// resolved from the seed at runtime - looking the user up by email (and
+// counting likes from the table) survives a seed regeneration, where a
+// hardcoded id or count would silently rot
+let userId: string
+let userJwt: string
+let seededLikesCount: number
+
+// the like round-trip cleans up after itself when it PASSES; this guard
+// cleans up when it fails mid-way, so one red run cannot leak a row into
+// the shared seeded db and poison every run after it
+let likedVacationId: string | null = null
 
 interface VacationRow {
     id: string
@@ -42,6 +52,20 @@ function get(url: string) {
 
 beforeAll(async () => {
     await init()
+
+    const user1 = await User.findOne({ where: { email: 'user1@otherworld.com' } })
+    if (!user1) throw new Error('seeded user1@otherworld.com not found - is the database seeded?')
+
+    userId = user1.id
+    userJwt = sign({ id: userId, role: Role.User }, key, { expiresIn: '1h' })
+    seededLikesCount = await Like.count({ where: { userId } })
+})
+
+afterEach(async () => {
+    if (likedVacationId) {
+        await Like.destroy({ where: { userId, vacationId: likedVacationId } })
+        likedVacationId = null
+    }
 })
 
 afterAll(async () => {
@@ -85,11 +109,12 @@ describe('vacations router integration tests', () => {
             expect(secondPage.map(v => v.id)).toEqual(all.slice(3, 6).map(v => v.id))
         })
 
-        it('filter=liked returns exactly the 5 seeded likes of user1', async () => {
+        it('filter=liked returns exactly the seeded likes of user1', async () => {
             const response = await get('/vacations?filter=liked&limit=100')
             const vacations: VacationRow[] = response.body
 
-            expect(vacations).toHaveLength(5)
+            expect(vacations).toHaveLength(seededLikesCount)
+            expect(vacations.length).toBeGreaterThan(0)
             expect(vacations.every(v => v.likedByMe)).toBe(true)
         })
 
@@ -123,6 +148,9 @@ describe('vacations router integration tests', () => {
             const all = (await get('/vacations?limit=100')).body as VacationRow[]
             const target = all.find(v => !v.likedByMe)!
             expect(target).toBeDefined()
+
+            // registered BEFORE the like, so a failure anywhere below still cleans up
+            likedVacationId = target.id
 
             const like = await request(app)
                 .post(`/vacations/${target.id}/like`)

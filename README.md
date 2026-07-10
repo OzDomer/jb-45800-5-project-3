@@ -123,7 +123,7 @@ Like updates are pushed through a socket relay (`io/`) using **rooms**: browsers
 
 ## Tests
 
-The backend ships a jest suite (43 tests) in two layers, co-located with the code they test:
+The backend ships a two-layer jest suite, co-located with the code it tests:
 
 ```bash
 cd backend
