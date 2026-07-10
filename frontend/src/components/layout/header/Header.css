@@ -102,12 +102,26 @@
     background: var(--signal-bg);
 }
 
-@media (max-width: 800px) {
+/* mid widths: the nav cannot fit beside the logo and user box, so it
+   gets its own full row instead of crumpling into a column */
+@media (max-width: 1240px) {
     .Header {
         flex-wrap: wrap;
-        gap: 10px;
+        row-gap: 2px;
+        gap: 16px;
     }
 
+    .Header-user {
+        margin-left: auto;
+    }
+
+    .Header-nav {
+        order: 4;
+        flex-basis: 100%;
+    }
+}
+
+@media (max-width: 800px) {
     .Header-user span {
         display: none;
     }
