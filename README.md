@@ -121,6 +121,20 @@ The implementation uses `bcryptjs` (pure JS) rather than the native `bcrypt` mod
 
 Like updates are pushed through a socket relay (`io/`) using **rooms**: browsers join a `vacations-watchers` room only while the vacations list is on screen, and the relay emits like/unlike events to room members only — a client sitting on the About page receives nothing. Message names are shared between backend and frontend through the published npm package, exactly once, with no duplication.
 
+## Tests
+
+The backend ships a jest suite (43 tests) in two layers, co-located with the code they test:
+
+```bash
+cd backend
+npm run test:unit          # pure unit tests - no infrastructure needed
+npm test                   # everything - requires: docker compose up -d database
+```
+
+**Unit tests** (`*.test.ts`) test functions and middlewares in isolation — middlewares are invoked the way express would, with a hand-mocked request and `jest.fn()` as `next`, asserting exactly which status and friendly message they produce. Covered: bcrypt hashing (including the guarantee that the *same password produces different hashes* — the per-user salt), the zod validators (past-date/price/date-order rules and multipart string coercion), inclusive trip-day math, `authEnforce` (missing/malformed/forged/**expired** tokens), `adminEnforce`, and the validation middleware factory (including that unknown fields like a smuggled `role` are stripped).
+
+**Integration tests** (`*.integration.test.ts`) drive the real express app with supertest against the real dockerized MySQL and its seed data, with the socket relay and S3 mocked out. Covered: the full signup → duplicate 409 → login flow (through the actual bcrypt compare path), the seeded admin's role claim, list sorting/pagination, the `liked` filter, the like → unlike round trip with count assertions, and the admin guard. Date-dependent assertions are **computed from the seed data at runtime** using the same UTC-today convention as the API — the suite will not rot as calendar dates pass.
+
 ## Project structure
 
 ```
