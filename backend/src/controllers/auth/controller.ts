@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import { createHmac } from "crypto";
 import { sign } from "jsonwebtoken";
+import { hash, compare } from "bcryptjs";
 import config from 'config'
 import { UniqueConstraintError } from "sequelize";
 import { OAuth2Client } from "google-auth-library";
@@ -8,10 +8,14 @@ import User from "../../models/User";
 
 const googleClient = new OAuth2Client(config.get<string>('google.clientId'))
 
-export function hashPassword(plainTextPassword: string): string {
-    if (!plainTextPassword) return
-    const key = config.get<string>('app.encryptionKey')
-    return createHmac('sha256', key).update(plainTextPassword).digest('hex')
+// bcrypt with a per-user random salt (embedded in the hash) and a work
+// factor of 2^10 rounds - two users with the same password get different
+// hashes, and brute-forcing is deliberately slow. see the README's
+// "password storage" section for the full reasoning.
+const BCRYPT_ROUNDS = 10
+
+export function hashPassword(plainTextPassword: string): Promise<string> {
+    return hash(plainTextPassword, BCRYPT_ROUNDS)
 }
 
 function generateJwt(user: User): string {
@@ -25,7 +29,7 @@ function generateJwt(user: User): string {
 
 export async function signup(request: Request<object, object, { firstName: string, lastName: string, email: string, password: string }>, response: Response, next: NextFunction) {
     try {
-        request.body.password = hashPassword(request.body.password)
+        request.body.password = await hashPassword(request.body.password)
 
         const newUser = await User.create(request.body)
 
@@ -45,14 +49,12 @@ export async function login(request: Request<object, object, { email: string, pa
     try {
         const { email, password } = request.body
 
-        const user = await User.findOne({
-            where: {
-                email,
-                password: hashPassword(password)
-            }
-        })
+        // salted hashes are not queryable - fetch by email, then compare.
+        // users created via google sign-in have no password at all and
+        // must fail classic login the same way as wrong credentials.
+        const user = await User.findOne({ where: { email } })
 
-        if (!user) return next({
+        if (!user || !user.password || !(await compare(password, user.password))) return next({
             status: 401,
             message: 'wrong email or password'
         })

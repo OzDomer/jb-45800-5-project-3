@@ -62,7 +62,7 @@ Then open **http://localhost:6124**.
 
 > **No OpenAI key?** `docker compose up -d --build` works without it — the entire site runs normally, and only the two AI pages answer with a friendly "AI features are not configured on this server".
 
-The database seeds itself on first startup (12 vacations, 3 users, sample likes), and the backend uploads the vacation images into the localstack S3 bucket automatically.
+The database seeds itself on first startup (12 vacations, 3 users, sample likes), and the backend uploads the vacation images into the localstack S3 bucket automatically. Per the course notes for the localstack challenge, the seed SQL stores the full URLs of the 12 localstack-hosted images.
 
 ### Seeded accounts
 
@@ -100,6 +100,22 @@ The assistant page answers questions like *"how many vacations are active right 
 The full auth chain is preserved end to end: frontend → backend → MCP server → backend REST — the user's JWT rides every hop, and the backend remains the single source of truth for auth. Because the JWT identifies the caller, the tools are personal too: `otherworld_list_vacations` with `filter: "liked"` answers *"which vacations did I like?"* for whoever is asking.
 
 The server follows [MCP server best practices](https://modelcontextprotocol.io/docs/concepts/tools): service-prefixed snake_case tool names (`otherworld_list_vacations`) so tools cannot collide with other mounted MCP servers, tool annotations (`readOnlyHint` / `idempotentHint` / `openWorldHint`), offset/limit pagination with `has_more` metadata instead of unbounded dumps, dual response formats (a token-friendly markdown table by default, full JSON on request), and DNS-rebinding protection on the Streamable HTTP endpoint.
+
+## Password storage — why bcrypt
+
+This project deviates from the keyed-hash approach shown in class (HMAC-SHA256 with an application-wide secret) and stores passwords with **bcrypt** instead. The reasoning, since it was a deliberate choice:
+
+**The problem with a keyed hash:** HMAC-SHA256 is deterministic — the same password always produces the same hash. That has two consequences. First, if two users pick the same password, their database rows contain **identical hashes**, so cracking one credential instantly cracks every duplicate, and an attacker reading the table can even spot shared passwords before cracking anything. Second, SHA-256 is designed to be *fast* (gigahashes per second on a GPU), which is a feature for checksums and a bug for passwords: speed is exactly what a brute-force attacker wants. The secret key helps only as long as it stays secret — and it lives right next to the data it protects.
+
+**What bcrypt does differently:**
+
+1. **A random per-user salt**, generated at hash time and embedded in the hash string itself — no separate column needed. Same password, different users → completely different hashes. You can see this in `database/otherworld.sql`: `user1@` and `user2@` share the password `user1234`, yet their hashes differ. Under the class approach those two rows would be byte-identical.
+2. **A tunable work factor** (`$2b$10$...` = 2¹⁰ rounds): each hash takes deliberately long to compute. A user logging in never notices ~50ms; an attacker trying billions of guesses notices very much.
+3. **No secret to leak** — the security comes from the salt and the cost, not from a key stored beside the database.
+
+**What it changes in the code:** salted hashes are not queryable, so login can no longer be `WHERE email = ? AND password = HASH(?)`. Instead the user is fetched by email and the password is verified with `bcrypt.compare`, which extracts the salt from the stored hash and re-derives it. Users created through Google sign-in have no password at all, and classic login rejects them with the same "wrong email or password" as any bad credential — no information leak about *why* it failed.
+
+The implementation uses `bcryptjs` (pure JS) rather than the native `bcrypt` module, which would require a C++ build toolchain inside the `node:alpine` docker image for no benefit at this scale.
 
 ## Live likes over socket.io rooms
 

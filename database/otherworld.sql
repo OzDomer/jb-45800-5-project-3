@@ -6,7 +6,9 @@
 --   user:  user1@otherworld.com / user1234
 --   user:  user2@otherworld.com / user1234
 --
--- passwords are stored as HMAC-SHA256 hashes keyed by the app encryptionKey
+-- passwords are stored as bcrypt hashes (per-user salt embedded in the
+-- hash, 2^10 rounds). note: user1 and user2 share the same password but
+-- have DIFFERENT hashes - that is the salt doing its job.
 
 CREATE DATABASE IF NOT EXISTS `otherworld` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `otherworld`;
@@ -32,9 +34,9 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
-('ff82a226-5b72-4a6d-a6ce-71c6f46b24ec', 'Albus', 'Dumbledore', 'admin@otherworld.com', '3232f1feb17d39e7521340a73b4102e8b35a197eea48fb93bf4a5c496e1bff8e', 'admin', '2026-07-09 12:00:00', '2026-07-09 12:00:00'),
-('bfb6cd40-fbed-4e78-8217-6964240b7536', 'Peter', 'Pan', 'user1@otherworld.com', '543231d4bb1ecd11e0e5d62e14f16ecc310edd4f84d046cc4e1a53e9081b7455', 'user', '2026-07-09 12:00:00', '2026-07-09 12:00:00'),
-('6ee61795-be75-492e-8846-e181942a5177', 'Marge', 'Simpson', 'user2@otherworld.com', '543231d4bb1ecd11e0e5d62e14f16ecc310edd4f84d046cc4e1a53e9081b7455', 'user', '2026-07-09 12:00:00', '2026-07-09 12:00:00');
+('ff82a226-5b72-4a6d-a6ce-71c6f46b24ec', 'Albus', 'Dumbledore', 'admin@otherworld.com', '$2b$10$e8O/OjDRpbfyU2CkvsvMYOiupA16f3criL1SJOm1JffXfFiGZLGWu', 'admin', '2026-07-09 12:00:00', '2026-07-09 12:00:00'),
+('bfb6cd40-fbed-4e78-8217-6964240b7536', 'Peter', 'Pan', 'user1@otherworld.com', '$2b$10$7rf6IVfUBWWmo9gCFRWCzeF28bOmQ9.NVypQw/EJf76cPBO46F/R2', 'user', '2026-07-09 12:00:00', '2026-07-09 12:00:00'),
+('6ee61795-be75-492e-8846-e181942a5177', 'Marge', 'Simpson', 'user2@otherworld.com', '$2b$10$f1vz0PKbd9djBuBdmWFEqeuRLZwwnR/krA8D3NpNTzXqOuRiGiOB2', 'user', '2026-07-09 12:00:00', '2026-07-09 12:00:00');
 
 -- --------------------------------------------------------
 -- table: vacations

@@ -19,6 +19,7 @@
     "@aws-sdk/lib-storage": "^3.1083.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "axios": "^1.16.1",
+    "bcryptjs": "^3.0.3",
     "config": "^4.4.1",
     "cors": "^2.8.6",
     "express": "^5.2.1",
