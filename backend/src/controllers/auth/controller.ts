@@ -17,8 +17,10 @@ export function hashPassword(plainTextPassword: string): string {
 function generateJwt(user: User): string {
     // strip the password (even hashed) from the jwt payload
     const { password, ...payload } = user.get({ plain: true })
-    // sessions expire - a leaked token is not a forever key
-    return sign(payload, config.get<string>('app.encryptionKey'), { expiresIn: '4h' })
+    // sessions expire - a leaked token is not a forever key. seven days fits
+    // this threat model (content browsing, not banking); production would
+    // move to short-lived access tokens with refresh rotation
+    return sign(payload, config.get<string>('app.encryptionKey'), { expiresIn: '7d' })
 }
 
 export async function signup(request: Request<object, object, { firstName: string, lastName: string, email: string, password: string }>, response: Response, next: NextFunction) {
