@@ -16,10 +16,10 @@ const endAfterStart = {
     message: 'end date cannot be before start date',
 }
 
+// UTC midnight - matches the system-wide UTC "today" convention
+// (z.coerce.date parses YYYY-MM-DD form values as UTC midnight too)
 function startOfToday(): Date {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    return today
+    return new Date(new Date().toISOString().slice(0, 10))
 }
 
 export const newVacationValidator = baseVacationValidator

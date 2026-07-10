@@ -24,10 +24,11 @@ function serializeVacationWithLikes(vacation: Vacation, userId: string) {
     }
 }
 
-// DATEONLY columns compare against a plain YYYY-MM-DD string in local time
+// "today" is UTC everywhere in this system - the same convention the MCP
+// summary tool and the assistant prompt use, and the clock the compose
+// containers run on. one definition, no midnight disagreements.
 function todayDateOnly(): string {
-    const now = new Date()
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+    return new Date().toISOString().slice(0, 10)
 }
 
 export async function getVacations(request: Request, response: Response, next: NextFunction) {

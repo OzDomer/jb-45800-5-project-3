@@ -1,6 +1,6 @@
-# replace all container names accroding to actual project
+# every service below is one container of the otherworld vacations system
 services:
-  # docker run --name betterx-db -e=MYSQL_ALLOW_EMPTY_PASSWORD=1 -e=MYSQL_DATABASE=college -e=MYSQL_TCP_PORT=3306 -p 3306:3306 -d shaharsol/betterx-db:1.0
+  # mysql, seeded on first startup from database/otherworld.sql
   database:
     container_name: otherworld-db-compose
     volumes:
@@ -21,7 +21,7 @@ services:
       retries: 5
       start_period: 30s
       
-  # docker run --name localstack -d -it -p 4566:4566 -p 4510-4559:4510-4559 localstack/localstack:4.4.0
+  # s3-compatible storage for the vacation images
   localstack:
     container_name: otherworld-localstack-compose
     ports:
@@ -43,7 +43,7 @@ services:
     depends_on:
       - backend
 
-  # docker run --name betterx-backend-p 3000:3000 -d shaharsol/betterx-backend:3.0
+  # express rest api
   backend:
     container_name: otherworld-backend-compose
     ports:
@@ -59,7 +59,7 @@ services:
       database:
         condition: service_healthy
   
-  # docker run --name betterx-front -p 6123:80 -d shaharsol/betterx-front:2.0
+  # react spa, built and served by nginx
   frontend:
     container_name: otherworld-front-compose
     ports:

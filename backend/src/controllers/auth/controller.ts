@@ -17,7 +17,8 @@ export function hashPassword(plainTextPassword: string): string {
 function generateJwt(user: User): string {
     // strip the password (even hashed) from the jwt payload
     const { password, ...payload } = user.get({ plain: true })
-    return sign(payload, config.get<string>('app.encryptionKey'))
+    // sessions expire - a leaked token is not a forever key
+    return sign(payload, config.get<string>('app.encryptionKey'), { expiresIn: '4h' })
 }
 
 export async function signup(request: Request<object, object, { firstName: string, lastName: string, email: string, password: string }>, response: Response, next: NextFunction) {

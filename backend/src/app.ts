@@ -24,7 +24,13 @@ app.use('/', cors())
 app.use('/auth', authRouter)
 app.use('/', authEnforce)
 app.use('/', json())
-app.use('/', fileUpload()) // handles multipart/form-data requests (vacation images)
+// handles multipart/form-data requests (vacation images);
+// capped so an oversized upload cannot fill server memory
+app.use('/', fileUpload({
+    limits: { fileSize: 5 * 1024 * 1024 },
+    abortOnLimit: true,
+    responseOnLimit: 'the image is too large - 5MB at most'
+}))
 app.use('/vacations', vacationsRouter)
 app.use('/reports', reportsRouter)
 app.use('/itinerary', itineraryRouter)
